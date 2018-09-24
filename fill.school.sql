@@ -1,15 +1,16 @@
 
-insert into contacts_contact
-(first_name, last_name, email, phone, address, description, createdOn, isActive, account_id, createdBy_id)
-select first_name, 
-last_name,
+insert into teacher
+(name, email, phone, address1, createdOn, isActive, createdBy_id)
+
+select concat(last_name,', ', last_name) as name,
 email,
 phone,
-bargaining_unit as address,
-middle_name as description,
+bargaining_unit as address1,
 update_ts as createdOn,
 enabled as isActive,
-2 as account_id,
 1 as createdBy_id
 
-from eddyod.se5aug2010 limit 666;
+from eddyod.se5aug2010 
+where first_name is not null and last_name is not null
+order by rand()
+limit 33;

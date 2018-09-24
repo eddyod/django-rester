@@ -16,15 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from accounts import views as aviews 
-from leads import views as lviews
-from opportunities import views as oviews
-from contacts import views as cviews
+from schools import views as school_views
+from schedules import views as schedule_views
+from teachers import views as teacher_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'accounts/', aviews.AccountListAPIView.as_view(), name='account-list'),
-    path(r'leads/', lviews.LeadListAPIView.as_view(), name='lead-list'),
-    path(r'opportunities/', oviews.OpportunityListAPIView.as_view(), name='opportunity-list'),
-    path(r'contacts/', cviews.ContactListAPIView.as_view(), name='contact-list')
+    path(r'schools/', school_views.SchoolListAPIView.as_view(), name='school-list'),
+    path(r'schedules/', schedule_views.ScheduleListAPIView.as_view(), name='schedule-list'),
+    path(r'teachers/', teacher_views.TeacherListAPIView.as_view(), name='teacher-list'),
 ]

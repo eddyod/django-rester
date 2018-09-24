@@ -12,10 +12,10 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='School',
+            name='Teacher',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('Name', models.CharField(max_length=64, verbose_name='Name of Account')),
+                ('name', models.CharField(max_length=150)),
                 ('email', models.EmailField(max_length=254)),
                 ('phone', models.CharField(max_length=20)),
                 ('address1', models.CharField(blank=True, max_length=50)),
@@ -31,9 +31,9 @@ class Migration(migrations.Migration):
                 ('isActive', models.BooleanField(default=True)),
             ],
             options={
-                'db_table': 'school',
-                'verbose_name_plural': 'Schools',
-                'verbose_name': 'School',
+                'db_table': 'teacher',
+                'verbose_name_plural': 'Teachers',
+                'verbose_name': 'Teacher',
             },
         ),
     ]

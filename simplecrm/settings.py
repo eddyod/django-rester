@@ -37,10 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
-    'leads',
-    'opportunities',
-    'contacts',
+    'schools',
+    'schedules',
+    'teachers',
     'rest_framework',
     'corsheaders'
 ]
