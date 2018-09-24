@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from .models import Teacher
 from .serializers import TeacherSerializer
 from rest_framework.permissions import IsAdminUser
@@ -11,5 +11,9 @@ class TeacherListAPIView(generics.ListCreateAPIView):
     #permission_classes = (IsAdminUser,)
 
 class TeacherMember(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
+
+class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
