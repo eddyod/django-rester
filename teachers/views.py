@@ -9,3 +9,7 @@ class TeacherListAPIView(generics.ListCreateAPIView):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
     #permission_classes = (IsAdminUser,)
+
+class TeacherMember(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
