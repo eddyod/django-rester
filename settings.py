@@ -23,9 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '77fy+^i(n=2)tq$0)&31d@uf3t+ge##$aclyla&lmr@lpinc1&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#ALLOWED_HOSTS = ['.mephistosoftware.com']
+#DEBUG = False
 
-ALLOWED_HOSTS = []
+DEBUG = True
+ALLOWED_HOSTS = ['*']
+
 CORS_ORIGIN_ALLOW_ALL=True
 
 # Application definition
@@ -37,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'schools',
     'schedules',
     'teachers',
@@ -55,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'simplecrm.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -73,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'simplecrm.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
@@ -83,9 +87,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'scheduler',                      # Or path to database file if using sqlite3.
-        'USER': 'eodonnell',                      # Not used with sqlite3.
-        'PASSWORD': 'IrishThunder',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'USER': 'eddyod',                      # Not used with sqlite3.
+        'PASSWORD': 'bir.dee!',                  # Not used with sqlite3.
+        'HOST': '192.168.1.12',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'sql_mode': 'traditional'},
     }
@@ -116,13 +120,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
+TIME_ZONE = 'America/Los_Angeles'
+#TIME_ZONE = 'UTC'
 USE_I18N = True
-
 USE_L10N = True
-
-USE_TZ = True
+USE_TZ = False
 APPEND_SLASH=False
 
 # Static files (CSS, JavaScript, Images)
@@ -130,3 +132,9 @@ APPEND_SLASH=False
 
 STATIC_URL = '/static/'
 
+# REST framework
+
+REST_FRAMEWORK = {
+ 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+ 'PAGE_SIZE': 20
+}

@@ -15,23 +15,28 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from schools import views as school_views
 from schedules import views as schedule_views
 from teachers import views as teacher_views
 
 from rest_framework.routers import DefaultRouter
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 router.register(r'schools', school_views.SchoolViewSet)
 router.register(r'schedules', schedule_views.ScheduleViewSet)
 router.register(r'teachers', teacher_views.TeacherViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(router.urls)),
+    path(r'events', schedule_views.ScheduleListAPIView.as_view(), name='event-list'),
+    path(r'list-teachers', teacher_views.TeacherListAPIView.as_view(), name='teacher-list'),
+    path(r'list-schools', school_views.SchoolListAPIView.as_view(), name='school-list'),
 ]
 
-urlpatterns += router.urls
+#urlpatterns += router.urls
+#    path(r'school/<int:pk>', school_views.SchoolMember.as_view(), name='school-get'),
 #    path(r'schedules/', schedule_views.ScheduleListAPIView.as_view(), name='schedule-list'),
 #    path(r'teachers/', teacher_views.TeacherListAPIView.as_view(), name='teacher-list'),
 #    path(r'teacher/<int:pk>/', teacher_views.TeacherMember.as_view()),

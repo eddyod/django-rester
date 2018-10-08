@@ -20,8 +20,62 @@
 --
 
 DROP TABLE IF EXISTS `accounts_account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `accounts_account` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL,
+  `email` varchar(254) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `industry` varchar(255) DEFAULT NULL,
+  `website` varchar(200) DEFAULT NULL,
+  `description` longtext,
+  `createdOn` datetime(6) NOT NULL,
+  `isActive` tinyint(1) NOT NULL,
+  `createdBy_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `accounts_account_createdBy_id_cdc5dd69_fk_auth_user_id` (`createdBy_id`),
+  CONSTRAINT `accounts_account_createdBy_id_cdc5dd69_fk_auth_user_id` FOREIGN KEY (`createdBy_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `accounts_account`
+--
+
+LOCK TABLES `accounts_account` WRITE;
+/*!40000 ALTER TABLE `accounts_account` DISABLE KEYS */;
+INSERT INTO `accounts_account` VALUES (2,'Fast Eddy','eddyod@yahoo.com','',NULL,NULL,NULL,'2018-09-22 07:01:00.000000',1,1);
+/*!40000 ALTER TABLE `accounts_account` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `accounts_account_assigned_to`
+--
 
 DROP TABLE IF EXISTS `accounts_account_assigned_to`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `accounts_account_assigned_to` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `accounts_account_assigned_to_account_id_user_id_44dc1cab_uniq` (`account_id`,`user_id`),
+  KEY `accounts_account_assigned_to_user_id_407e8c4d_fk_auth_user_id` (`user_id`),
+  CONSTRAINT `accounts_account_ass_account_id_7e994f48_fk_accounts_` FOREIGN KEY (`account_id`) REFERENCES `accounts_account` (`id`),
+  CONSTRAINT `accounts_account_assigned_to_user_id_407e8c4d_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `accounts_account_assigned_to`
+--
+
+LOCK TABLES `accounts_account_assigned_to` WRITE;
+/*!40000 ALTER TABLE `accounts_account_assigned_to` DISABLE KEYS */;
+/*!40000 ALTER TABLE `accounts_account_assigned_to` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `auth_group`
@@ -135,7 +189,7 @@ CREATE TABLE `auth_user` (
 
 LOCK TABLES `auth_user` WRITE;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$120000$vv85oKFStkT3$g01jKAOSqAkj+GBy1Rd9+JdNPkVYLjgP4OvgzXPT3t0=','2018-09-19 13:34:29.886736',1,'eddyod','','','eddyod@yahoo.com',1,1,'2018-09-19 13:34:12.322694');
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$120000$vv85oKFStkT3$g01jKAOSqAkj+GBy1Rd9+JdNPkVYLjgP4OvgzXPT3t0=','2018-09-26 12:51:53.694851',1,'eddyod','','','eddyod@yahoo.com',1,1,'2018-09-19 13:34:12.322694');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +360,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -315,7 +369,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2018-09-19 13:15:08.458757'),(2,'auth','0001_initial','2018-09-19 13:15:11.129884'),(3,'admin','0001_initial','2018-09-19 13:15:11.791671'),(4,'admin','0002_logentry_remove_auto_add','2018-09-19 13:15:11.813247'),(5,'admin','0003_logentry_add_action_flag_choices','2018-09-19 13:15:11.831978'),(6,'contenttypes','0002_remove_content_type_name','2018-09-19 13:15:12.100332'),(7,'auth','0002_alter_permission_name_max_length','2018-09-19 13:15:12.301563'),(8,'auth','0003_alter_user_email_max_length','2018-09-19 13:15:12.497731'),(9,'auth','0004_alter_user_username_opts','2018-09-19 13:15:12.519439'),(10,'auth','0005_alter_user_last_login_null','2018-09-19 13:15:12.663314'),(11,'auth','0006_require_contenttypes_0002','2018-09-19 13:15:12.680150'),(12,'auth','0007_alter_validators_add_error_messages','2018-09-19 13:15:12.698506'),(13,'auth','0008_alter_user_username_max_length','2018-09-19 13:15:12.895105'),(14,'auth','0009_alter_user_last_name_max_length','2018-09-19 13:15:13.091226'),(15,'restapp','0001_initial','2018-09-19 13:15:13.221817'),(16,'sessions','0001_initial','2018-09-19 13:15:13.389720'),(17,'restapp','0002_auto_20180919_1317','2018-09-19 13:17:19.994737'),(18,'accounts','0001_initial','2018-09-22 13:51:45.660768'),(19,'contacts','0001_initial','2018-09-22 13:51:46.237132'),(20,'leads','0001_initial','2018-09-22 13:51:47.433811'),(21,'opportunities','0001_initial','2018-09-22 13:51:48.890713'),(22,'teachers','0001_initial','2018-09-23 14:25:00.942422'),(23,'schools','0001_initial','2018-09-23 14:25:45.329119'),(24,'schedules','0001_initial','2018-09-23 14:25:46.061640'),(25,'schools','0002_auto_20180923_1429','2018-09-23 14:29:35.684102'),(26,'schools','0003_school_createdby','2018-09-23 14:39:52.958323'),(27,'teachers','0002_teacher_createdby','2018-09-23 14:39:53.301069');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2018-09-19 13:15:08.458757'),(2,'auth','0001_initial','2018-09-19 13:15:11.129884'),(3,'admin','0001_initial','2018-09-19 13:15:11.791671'),(4,'admin','0002_logentry_remove_auto_add','2018-09-19 13:15:11.813247'),(5,'admin','0003_logentry_add_action_flag_choices','2018-09-19 13:15:11.831978'),(6,'contenttypes','0002_remove_content_type_name','2018-09-19 13:15:12.100332'),(7,'auth','0002_alter_permission_name_max_length','2018-09-19 13:15:12.301563'),(8,'auth','0003_alter_user_email_max_length','2018-09-19 13:15:12.497731'),(9,'auth','0004_alter_user_username_opts','2018-09-19 13:15:12.519439'),(10,'auth','0005_alter_user_last_login_null','2018-09-19 13:15:12.663314'),(11,'auth','0006_require_contenttypes_0002','2018-09-19 13:15:12.680150'),(12,'auth','0007_alter_validators_add_error_messages','2018-09-19 13:15:12.698506'),(13,'auth','0008_alter_user_username_max_length','2018-09-19 13:15:12.895105'),(14,'auth','0009_alter_user_last_name_max_length','2018-09-19 13:15:13.091226'),(15,'restapp','0001_initial','2018-09-19 13:15:13.221817'),(16,'sessions','0001_initial','2018-09-19 13:15:13.389720'),(17,'restapp','0002_auto_20180919_1317','2018-09-19 13:17:19.994737'),(18,'accounts','0001_initial','2018-09-22 13:51:45.660768'),(19,'contacts','0001_initial','2018-09-22 13:51:46.237132'),(20,'leads','0001_initial','2018-09-22 13:51:47.433811'),(21,'opportunities','0001_initial','2018-09-22 13:51:48.890713'),(22,'teachers','0001_initial','2018-09-23 14:25:00.942422'),(23,'schools','0001_initial','2018-09-23 14:25:45.329119'),(24,'schedules','0001_initial','2018-09-23 14:25:46.061640'),(25,'schools','0002_auto_20180923_1429','2018-09-23 14:29:35.684102'),(26,'schools','0003_school_createdby','2018-09-23 14:39:52.958323'),(27,'teachers','0002_teacher_createdby','2018-09-23 14:39:53.301069'),(28,'schedules','0002_remove_schedule_name','2018-09-26 18:08:18.124215');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,7 +395,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
-INSERT INTO `django_session` VALUES ('5wclht2999w6tinj28atlppl2ipmko3m','MmM4Mjc2YmE3ZWY1MzI3MDIwNTRjYzhmYWVmMjkyMGUzZmNjZDg0ZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MzRkMDhiNGZkZGE0MzQzMTFlMzQ3OWRlODczMDExNWQwMDgyMTA4In0=','2018-10-03 13:34:29.898985');
+INSERT INTO `django_session` VALUES ('1zuehx5tg3ktw5iv31w4h4l9ulun6kxe','M2E0ODBlODIyNzA3ZmFjY2I4ZDBhMzIxZDdlNzhhZDU0MjU1NmJmZjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIyODk4YWRjYjQ5ZmE5MWNmOTVkZWQyNTM4MjY2NmFkNDEwNjRhYjcxIn0=','2018-10-10 03:33:27.476649'),('5wclht2999w6tinj28atlppl2ipmko3m','MmM4Mjc2YmE3ZWY1MzI3MDIwNTRjYzhmYWVmMjkyMGUzZmNjZDg0ZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI1MzRkMDhiNGZkZGE0MzQzMTFlMzQ3OWRlODczMDExNWQwMDgyMTA4In0=','2018-10-03 13:34:29.898985'),('k2i3imesvcugzm10p5z97s71c3572iad','M2E0ODBlODIyNzA3ZmFjY2I4ZDBhMzIxZDdlNzhhZDU0MjU1NmJmZjp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiIyODk4YWRjYjQ5ZmE5MWNmOTVkZWQyNTM4MjY2NmFkNDEwNjRhYjcxIn0=','2018-10-10 12:51:53.716939');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,6 +539,96 @@ LOCK TABLES `opportunities_opportunity_contacts` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `recess_tools_classes`
+--
+
+DROP TABLE IF EXISTS `recess_tools_classes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recess_tools_classes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `parentId` int(11) DEFAULT NULL,
+  `packageId` int(11) DEFAULT NULL,
+  `docComment` text,
+  `file` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recess_tools_classes`
+--
+
+LOCK TABLES `recess_tools_classes` WRITE;
+/*!40000 ALTER TABLE `recess_tools_classes` DISABLE KEYS */;
+INSERT INTO `recess_tools_classes` VALUES (1,'SchedulerHomeController',2,1,'/**\n * !RespondsWith Layouts\n * !Prefix Views: home/, Routes: /\n */','/home/httpd/html/recess/apps/scheduler/controllers/SchedulerHomeController.class.php'),(2,'Controller',3,3,'/**\n * The controller is responsible for interpretting a preprocessed Request,\n * performing some action in response to the Request (usually CRUDS), and\n * returning a Response which contains relevant state for a view to render\n * the Response.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @author Joshua Paine\n */','/home/httpd/html/recess/recess/recess/framework/controllers/Controller.class.php'),(3,'AbstractController',4,4,'/**\n * The controller is responsible for interpretting a preprocessed Request,\n * performing some action in response to the Request (usually CRUDS), and\n * returning a Response which contains relevant state for a view to render\n * the Response.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n */','/home/httpd/html/recess/recess/recess/framework/AbstractController.class.php'),(4,'Object',NULL,6,'/**\n * Object is the base class for extensible classes in the Recess.\n * Object introduces a standard mechanism for building a class\n * descriptor through reflection and the realization of Annotations.\n * Object also introduces the ability to attach methods to a class\n * at run-time.\n * \n * Sub-classes of Object can introduce extensibility points \n * with \'wrappable\' methods. A wrappable method can be dynamically \'wrapped\' \n * by other methods which are called prior to or after the wrapped method.\n * \n * Wrappable methods can be declared using a Wrappable annotation on the \n * method being wrapped. The annotation takes a single parameter, which is\n * the desired name of the wrapped method. By convention the native PHP method\n * being wrapped is prefixed with \'wrapped\', i.e.:\n *  class Foobar {\n *    /** !Wrappable foo * /\n *    function wrappedFoo() { ... }\n *  }\n *  $obj->foo();\n * \n * Example usage of wrappable methods and a hypothetical \"EchoWrapper\" which\n * wraps a method by echo\'ing strings before and after. \n * \n *   class Model extends Object {\n *     /** !Wrappable insert * /\n *     function wrappedInsert() { echo \"Wrapped (insert)\"; }\n *   }\n * \n *   /** !EchoWrapper insert, Before: \"Hello\", After: \"World\" * /\n *   class Person extends Model {}\n * \n *   $person = new Person();\n *   $person->insert();\n *   \n *   // Output:\n *   Hello\n *   Wrapped (insert)\n *   World\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/lang/Object.class.php'),(5,'teacherController',2,1,'/**\n * !RespondsWith Layouts\n * !Prefix teacher/\n */','/home/httpd/html/recess/apps/scheduler/controllers/teacherController.class.php'),(6,'teacher',7,7,'/**\n * !Database Default\n * !Table teacher\n */','/home/httpd/html/recess/apps/scheduler/models/teacher.class.php'),(7,'Model',4,8,'/**\n * Model is the basic unit of organization in Recess\' simple ORM.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/orm/Model.class.php'),(8,'SchedulerApplication',9,2,'','/home/httpd/html/recess/apps/scheduler/SchedulerApplication.class.php'),(9,'Application',NULL,4,'','/home/httpd/html/recess/recess/recess/framework/Application.class.php'),(10,'WelcomeHomeController',2,10,'/**\n * !RespondsWith Layouts, Json\n * !Prefix Routes: /, Views: home/\n */','/home/httpd/html/recess/apps/welcome/controllers/WelcomeHomeController.class.php'),(11,'WelcomeApplication',9,11,'','/home/httpd/html/recess/apps/welcome/WelcomeApplication.class.php'),(12,'RecessToolsAppsController',2,12,'/**\n * !RespondsWith Layouts, Json\n * !Prefix apps/\n */','/home/httpd/html/recess/recess/recess/apps/tools/controllers/RecessToolsAppsController.class.php'),(13,'RecessToolsCodeController',2,12,'/**\n * !RespondsWith Layouts\n * !Prefix code/\n */','/home/httpd/html/recess/recess/recess/apps/tools/controllers/RecessToolsCodeController.class.php'),(14,'RecessToolsDatabaseController',2,12,'/**\n * !RespondsWith Layouts, Json\n * !Prefix database/\n */','/home/httpd/html/recess/recess/recess/apps/tools/controllers/RecessToolsDatabaseController.class.php'),(15,'RecessToolsHomeController',2,12,'/**\n * !RespondsWith Layouts, Json\n * !Prefix Views: home/, Routes: /\n */','/home/httpd/html/recess/recess/recess/apps/tools/controllers/RecessToolsHomeController.class.php'),(16,'RecessToolsRoutesController',2,12,'/**\n * !RespondsWith Layouts, Json\n * !Prefix routes/\n */','/home/httpd/html/recess/recess/recess/apps/tools/controllers/RecessToolsRoutesController.class.php'),(17,'RecessToolsTestsController',2,12,'/**\n * !RespondsWith Layouts, Json\n * !Prefix tests/\n */','/home/httpd/html/recess/recess/recess/apps/tools/controllers/RecessToolsTestsController.class.php'),(18,'MoreCanonical',7,15,'/**\n * !Database Default\n * !Table canonicals\n */','/home/httpd/html/recess/recess/recess/apps/tools/models/MoreCanonical.class.php'),(19,'RecessReflectorClass',7,15,'/**\n * !BelongsTo package, Class: RecessReflectorPackage, Key: packageId\n * !BelongsTo parent, Class: RecessReflectorClass, Key: parentId\n * !HasMany children, Class: RecessReflectorClass, Key: parentId\n * !Table recess_tools_classes\n */','/home/httpd/html/recess/recess/recess/apps/tools/models/RecessReflectorClass.class.php'),(20,'RecessReflectorPackage',7,15,'/**\n * !HasMany classes, Class: RecessReflectorClass, Key: packageId\n * !HasMany children, Class: RecessReflectorPackage, Key: parentId\n * !BelongsTo parent, Class: RecessReflectorPackage, Key: parentId\n * !Table recess_tools_packages\n */','/home/httpd/html/recess/recess/recess/apps/tools/models/RecessReflectorPackage.class.php'),(21,'RecessToolsApplication',9,13,'','/home/httpd/html/recess/recess/recess/apps/tools/RecessToolsApplication.class.php'),(22,'Cache',NULL,16,'/**\n * Cache is a low level service offering volatile key-value pair\n * storage. Chain-of-command allows multiple providers to be used.\n * \n * Placing all cache providers in this Cache file to avoid costs\n * of including individual providers. For the perf concerned be \n * encouraged to remove unused cache providers from this file.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n **/','/home/httpd/html/recess/recess/recess/cache/Cache.class.php'),(23,'Databases',NULL,9,'/**\n * Registry of Database Sources\n *\n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/Databases.class.php'),(24,'AbstractRelationshipAnnotation',25,17,'/**\n * Abstract class for relationship annotations.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/orm/annotations/AbstractRelationshipAnnotation.class.php'),(25,'Annotation',NULL,6,'/**\n * Base class for class, method, and property annotations.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/lang/Annotation.class.php'),(26,'BelongsToAnnotation',24,17,'/**\n * An annotation used on Model Classes, the BelongsTo annotation gives a model\n * a BelongsToRelationship.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/orm/annotations/BelongsToAnnotation.class.php'),(27,'ColumnAnnotation',25,17,'/**\n * An annotation used on Model properties which specifies information about the column\n * a given property maps to in the data source.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/orm/annotations/ColumnAnnotation.class.php'),(28,'DatabaseAnnotation',25,17,'/**\n * An annotation used on Model Classes, the Database annotations sets the name\n * of the data source (Databases::getSource($name)) this Model should talk to.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/orm/annotations/DatabaseAnnotation.class.php'),(29,'HasManyAnnotation',24,17,'/**\n * An annotation used on Model Classes, the HasMany annotations gives a model\n * a HasManyRelationship.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/orm/annotations/HasManyAnnotation.class.php'),(30,'TableAnnotation',25,17,'/**\n * An annotation used on Model Classes, the Table annotations links a model\n * to a table in the RDBMS.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/orm/annotations/TableAnnotation.class.php'),(31,'ModelDataSource',32,8,'','/home/httpd/html/recess/recess/recess/database/orm/ModelDataSource.class.php'),(32,'PdoDataSource',33,18,'/**\n * A PDO wrapper in the Recess PHP Framework that provides a single interface for commonly \n * needed operations (i.e.: list tables, list columns in a table, etc).\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/pdo/PdoDataSource.class.php'),(33,'PDO',NULL,NULL,'',''),(34,'ModelGen',NULL,8,'','/home/httpd/html/recess/recess/recess/database/orm/ModelGen.class.php'),(35,'ModelSet',36,8,'','/home/httpd/html/recess/recess/recess/database/orm/ModelSet.class.php'),(36,'PdoDataSet',NULL,18,'/**\n * PdoDataSet is used as a proxy to query results that is realized once the results are\n * iterated over or accessed using array notation. Queries can thus be built incrementally\n * and an SQL request will only be issued once needed.\n *  \n * Example usage:\n * \n * $results = new PdoDataSet(Databases::getDefault());\n * $results->from(\'tableName\')->equal(\'someColumn\', \'Hi\')->limit(10)->offset(50);\n * foreach($results as $result) { // This is when the query is run!\n * 		print_r($result);\n * }\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/pdo/PdoDataSet.class.php'),(37,'ModelValidationException',38,8,'','/home/httpd/html/recess/recess/recess/database/orm/ModelValidationException.class.php'),(38,'RecessException',39,NULL,'','/home/httpd/html/recess/recess/recess/diagnostics/Diagnostics.class.php'),(39,'Exception',NULL,NULL,'',''),(40,'BelongsToRelationship',41,19,'/**\n * A BelongsTo Recess Relationship is an abstraction of for the Many side of a \n * foreign key relationship on the RDBMS.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/orm/relationships/BelongsToRelationship.class.php'),(41,'Relationship',NULL,19,'/**\n * A Recess Relationship is an abstraction of a foreign key relationship on the RDBMS.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/orm/relationships/Relationship.class.php'),(42,'HasManyRelationship',41,19,'/**\n * A HasMany Recess Relationship is an abstraction of for the Many side of a \n * foreign key relationship on the RDBMS.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/orm/relationships/HasManyRelationship.class.php'),(43,'DataSourceCouldNotConnectException',38,20,'/**\n * This exception is thrown when the connect operation fails.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/pdo/exceptions/DataSourceCouldNotConnectException.class.php'),(44,'ProviderDoesNotExistException',38,20,'/**\n * This exception is thrown when the PdoDataSource is instantiated\n * with a PDO Driver DSN that does not have an associated Recess\n * IPdoDataSourceProvider.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/pdo/exceptions/ProviderDoesNotExistException.class.php'),(45,'IPdoDataSourceProvider',NULL,18,'/**\n * Interface for vendor specific operations needed by PdoDataSource.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/pdo/IPdoDataSourceProvider.class.php'),(46,'MysqlDataSourceProvider',NULL,18,'/**\n * MySql Data Source Provider\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/pdo/MysqlDataSourceProvider.class.php'),(47,'RecessColumnDescriptor',NULL,18,'/**\n * RecessTable represents a basic abstraction of an RDBMS column.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/pdo/RecessColumnDescriptor.class.php'),(48,'RecessTableDescriptor',NULL,18,'/**\n * RecessTableDescriptor represents a basic abstraction of an RDBMS table.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/pdo/RecessTableDescriptor.class.php'),(49,'RecessType',NULL,18,'/**\n * Recess has a fixed set of native \'recess\' types that are mapped to vendor specific\n * column types by individual DataSourceProviders.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/pdo/RecessType.class.php'),(50,'SqliteDataSourceProvider',NULL,18,'/**\n * Sqlite 3 Data Source Provider\n * @author Kris Jordan <krisjordan@gmail.com>\n */','/home/httpd/html/recess/recess/recess/database/pdo/SqliteDataSourceProvider.class.php'),(51,'ISqlConditions',NULL,21,'/**\n * Interface used which maps to conditional SQL statements\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/sql/ISqlConditions.class.php'),(52,'ISqlSelectOptions',NULL,21,'/**\n * Interface used which maps to SELECT SQL statements\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/sql/ISqlSelectOptions.class.php'),(53,'SqlBuilder',NULL,21,'/**\n * SqlBuilder is used to incrementally compose named-parameter PDO Sql strings \n * using a simple, chainable method call API. This is a naive wrapper that does\n * not gaurantee valid SQL output (i.e. column names using reserved SQL words).\n * \n * 4 classes of SQL strings can be built: INSERT, UPDATE, DELETE, SELECT.\n * This class is intentionally arranged from the low complexity requirements\n * of INSERT to the more complex SELECT.\n * \n * INSERT:        table, column/value assignments\n * UPDATE/DELETE: where conditions\n * SELECT:        order, joins, offset, limit, distinct\n * \n * Example usage: \n * \n * $sqlBuilder->into(\'table_name\')->assign(\'column\', \'value\')->insert() .. \n * 		returns \"INSERT INTO table_name (column) VALUES (:column)\"\n * $sqlBuilder->getPdoArguments() returns array( \':column\' => \'value\' )\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @contributor Luiz Alberto Zaiats \n * \n * @copyright 2008, 2009 Kris Jordan\n * @package Recess PHP Framework\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/database/sql/SqlBuilder.class.php'),(54,'Diagnostics',NULL,22,'/**\n * @author Kris Jordan <krisjordan@gmail.com>\n * @copyright 2008, 2009-2009 Kris Jordan\n * @package recess\n * @license MIT\n * @link http://www.recessframework.org/\n */','/home/httpd/html/recess/recess/recess/diagnostics/Diagnostics.class.php'),(55,'AbstractHelper',NULL,4,'','/home/httpd/html/recess/recess/recess/framework/AbstractHelper.class.php'),(56,'AbstractView',4,4,'/**\n * Renders a Response in a desired format by sending relevant\n * HTTP headers usually followed by a rendered body.\n * \n * @author Kris Jordan <krisjordan@gmail.com>\n * @author Joshua Paine\n * \n * @abstract \n */','/home/httpd/html/recess/recess/recess/framework/AbstractView.class.php'),(57,'PrefixAnnotation',25,23,'','/home/httpd/html/recess/recess/recess/framework/controllers/annotations/PrefixAnnotation.class.php'),(58,'RespondsWithAnnotation',25,23,'','/home/httpd/html/recess/recess/recess/framework/controllers/annotations/RespondsWithAnnotation.class.php'),(59,'RouteAnnotation',25,23,'','/home/httpd/html/recess/recess/recess/framework/controllers/annotations/RouteAnnotation.class.php'),(60,'RoutesPrefixAnnotation',25,23,'','/home/httpd/html/recess/recess/recess/framework/controllers/annotations/RoutesPrefixAnnotation.class.php'),(61,'ViewAnnotation',25,23,'','/home/httpd/html/recess/recess/recess/framework/controllers/annotations/ViewAnnotation.class.php'),(62,'DefaultPolicy',NULL,4,'','/home/httpd/html/recess/recess/recess/framework/DefaultPolicy.class.php'),(63,'BooleanInput',64,24,'','/home/httpd/html/recess/recess/recess/framework/forms/BooleanInput.class.php'),(64,'FormInput',NULL,24,'','/home/httpd/html/recess/recess/recess/framework/forms/FormInput.class.php'),(65,'DateLabelInput',64,24,'','/home/httpd/html/recess/recess/recess/framework/forms/DateLabelInput.class.php'),(66,'DateTimeInput',64,24,'','/home/httpd/html/recess/recess/recess/framework/forms/DateTimeInput.class.php'),(67,'Form',NULL,24,'','/home/httpd/html/recess/recess/recess/framework/forms/Form.class.php'),(68,'HiddenInput',64,24,'','/home/httpd/html/recess/recess/recess/framework/forms/HiddenInput.class.php'),(69,'LabelInput',64,24,'','/home/httpd/html/recess/recess/recess/framework/forms/LabelInput.class.php'),(70,'ModelForm',67,24,'','/home/httpd/html/recess/recess/recess/framework/forms/ModelForm.class.php'),(71,'ModelSelectInput',64,24,'','/home/httpd/html/recess/recess/recess/framework/forms/ModelSelectInput.class.php'),(72,'TextAreaInput',64,24,'','/home/httpd/html/recess/recess/recess/framework/forms/TextAreaInput.class.php'),(73,'TextInput',64,24,'','/home/httpd/html/recess/recess/recess/framework/forms/TextInput.class.php'),(74,'AssertiveTemplate',NULL,25,'/**\n * AssertiveTemplate is a helper class that provides support for\n * \'Assertive Templates\' or templates that assert their inputs. Typically\n * you will use a subclass of AssertiveTemplate, rather than the base\n * class itself.\n * \n * @author Kris Jordan\n */','/home/httpd/html/recess/recess/recess/framework/helpers/AssertiveTemplate.class.php');
+/*!40000 ALTER TABLE `recess_tools_classes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recess_tools_packages`
+--
+
+DROP TABLE IF EXISTS `recess_tools_packages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recess_tools_packages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `parentId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recess_tools_packages`
+--
+
+LOCK TABLES `recess_tools_packages` WRITE;
+/*!40000 ALTER TABLE `recess_tools_packages` DISABLE KEYS */;
+INSERT INTO `recess_tools_packages` VALUES (1,'scheduler.controllers',2),(2,'scheduler',NULL),(3,'recess.framework.controllers',4),(4,'recess.framework',5),(5,'recess',NULL),(6,'recess.lang',5),(7,'scheduler.models',2),(8,'recess.database.orm',9),(9,'recess.database',5),(10,'welcome.controllers',11),(11,'welcome',NULL),(12,'recess.apps.tools.controllers',13),(13,'recess.apps.tools',14),(14,'recess.apps',5),(15,'recess.apps.tools.models',13),(16,'recess.cache',5),(17,'recess.database.orm.annotations',8),(18,'recess.database.pdo',9),(19,'recess.database.orm.relationships',8),(20,'recess.database.pdo.exceptions',18),(21,'recess.database.sql',9),(22,'recess.diagnostics',5),(23,'recess.framework.controllers.annotations',3),(24,'recess.framework.forms',4),(25,'recess.framework.helpers',4);
+/*!40000 ALTER TABLE `recess_tools_packages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `schedule`
+--
+
+DROP TABLE IF EXISTS `schedule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `schedule` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `startTime` datetime(6) NOT NULL,
+  `endTime` datetime(6) NOT NULL,
+  `description` longtext,
+  `createdOn` datetime(6) NOT NULL,
+  `isActive` tinyint(1) NOT NULL,
+  `createdBy_id` int(11) NOT NULL,
+  `school_id` int(11) NOT NULL,
+  `teacher_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `schedule_createdBy_id_c938e024_fk_auth_user_id` (`createdBy_id`),
+  KEY `schedule_school_id_8d0196c4_fk_school_id` (`school_id`),
+  KEY `schedule_teacher_id_3c8a1fec_fk_teacher_id` (`teacher_id`),
+  CONSTRAINT `schedule_createdBy_id_c938e024_fk_auth_user_id` FOREIGN KEY (`createdBy_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `schedule_school_id_8d0196c4_fk_school_id` FOREIGN KEY (`school_id`) REFERENCES `school` (`id`),
+  CONSTRAINT `schedule_teacher_id_3c8a1fec_fk_teacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `schedule`
+--
+
+LOCK TABLES `schedule` WRITE;
+/*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
+INSERT INTO `schedule` VALUES (1,'2018-10-13 08:00:00.000000','2018-10-13 10:00:00.000000',NULL,'2018-09-26 19:16:30.555579',0,1,2,1),(2,'2018-10-14 08:00:00.000000','2018-10-14 10:00:00.000000',NULL,'2018-09-26 19:51:58.072642',0,1,2,1);
+/*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `school`
 --
 
@@ -493,25 +637,25 @@ DROP TABLE IF EXISTS `school`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `school` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(254),
-  `phone` varchar(20),
-  `address1` varchar(50) ,
-  `address2` varchar(50) ,
-  `city` varchar(50) ,
-  `postalCode` varchar(50) ,
-  `province` varchar(50) ,
-  `country` varchar(50) ,
+  `name` varchar(150) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `address1` varchar(50) NOT NULL,
+  `address2` varchar(50) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `postalCode` varchar(50) NOT NULL,
+  `province` varchar(50) NOT NULL,
+  `country` varchar(50) NOT NULL,
   `latitude` decimal(9,4) DEFAULT NULL,
   `longitude` decimal(9,4) DEFAULT NULL,
   `description` longtext,
-  `createdOn` datetime(6) ,
-  `isActive` tinyint(1) ,
-  `createdBy_id` int(11) ,
+  `createdOn` datetime(6) NOT NULL,
+  `isActive` tinyint(1) NOT NULL,
+  `createdBy_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `school_createdBy_id_2789765b_fk_auth_user_id` (`createdBy_id`),
   CONSTRAINT `school_createdBy_id_2789765b_fk_auth_user_id` FOREIGN KEY (`createdBy_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -520,6 +664,7 @@ CREATE TABLE `school` (
 
 LOCK TABLES `school` WRITE;
 /*!40000 ALTER TABLE `school` DISABLE KEYS */;
+INSERT INTO `school` VALUES (2,'Dunno','eddyod@yahoo.com','555-1212','','','','','','',NULL,NULL,NULL,'2018-09-26 16:46:51.277386',1,1),(3,'Dunno','joe@blow.tuesday.com','619-555-1212','','','','','','',NULL,NULL,NULL,'2018-09-26 16:49:26.387942',1,1),(4,'Dunno','eodonnell@ucsd.edu','619-555-1212','','','','','','',NULL,NULL,NULL,'2018-09-26 16:53:39.236631',1,1);
 /*!40000 ALTER TABLE `school` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -550,7 +695,7 @@ CREATE TABLE `teacher` (
   PRIMARY KEY (`id`),
   KEY `teacher_createdBy_id_125a267f_fk_auth_user_id` (`createdBy_id`),
   CONSTRAINT `teacher_createdBy_id_125a267f_fk_auth_user_id` FOREIGN KEY (`createdBy_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -559,7 +704,7 @@ CREATE TABLE `teacher` (
 
 LOCK TABLES `teacher` WRITE;
 /*!40000 ALTER TABLE `teacher` DISABLE KEYS */;
-INSERT INTO `teacher` VALUES (1,'TSUI, TIMOTHY','','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(2,'DEL ROSARIO, CINDY','crdelrosario@ucsd.edu       ','8588225000','CX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(3,'SHAFFER, ELIZABETH','eshaffer@ucsd.edu           ','8586771545','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(4,'MURRAY, JENNIFER','jlmurray@ucsd.edu           ','6195437428','NX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(5,'IMEL, ANNE','aimel@ucsd.edu','6195432244','HX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2007-05-08 03:21:25.000000',2,1),(6,'AZAMOV, ALISHERHON','aazamov@ucsd.edu            ','6195436040','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2009-10-16 06:01:06.000000',2,1),(7,'ANTHONY, MELISSA','mlanthony@ucsd.edu          ','','CX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(8,'IMAGAWA, SAYAKA','simagawa@ucsd.edu','8588220218','RX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2009-07-02 13:01:07.000000',2,1),(9,'MENDOZA, LEE','l1ho@ucsd.edu','8586423875','RX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2008-01-01 13:20:09.000000',2,1),(10,'PAE, IVANA','','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(11,'MIN, HYO','hjmin@ucsd.edu              ','','RX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-05-01 06:01:10.000000',2,1),(12,'STARK, JOHN','jmstark@ucsd.edu            ','6195436893','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(13,'BURROLA, ERNESTINA','eburrola@ucsd.edu           ','6195436570','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(14,'VANDERVELDE, JILL','jvandervelde@ucsd.edu','6195940300','HX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2006-08-16 13:10:06.000000',2,1),(15,'RICHTER III, FREDERICK','frichter@ucsd.edu           ','6195435358','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(16,'FERNANDEZ, BERNABE','befernandez@ucsd.edu        ','','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-05-11 06:01:08.000000',2,1),(17,'IMANSJAH, AUDREYANDRA','','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(18,'GARBELLA, MARY','mgarbella@ucsd.edu          ','8585345923','CX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(19,'RUBERG, JOSHUA','jruberg@ucsd.edu','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2009-07-02 13:01:07.000000',2,1),(20,'SHAPUTNIC, CAROLYN','cshaputnic@ucsd.edu         ','8588223698','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(21,'ALKATIB, DIANA','','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2009-11-26 06:01:15.000000',2,1),(22,'LIU, MICHAEL','','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(23,'DELOS ANGELES, MARIA ARABELLE','mdelosangeles@ucsd.edu      ','6195436364','NX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(24,'GISON, DOROTHY','','','NX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2007-09-11 14:00:08.000000',2,1),(25,'SHEA, KAREN','kshea@ucsd.edu              ','6195435753','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(26,'ZEPEDA, KARLA','kzepeda@ucsd.edu            ','6194719210','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(27,'VERA, JESUS','jevera@ucsd.edu             ','8588225604','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(28,'RILEY, TERENCE','tmriley@ucsd.edu','6195432952','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2008-01-19 13:20:08.000000',2,1),(29,'TAING, JENNIFER','jtaing@ucsd.edu','','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2008-05-21 12:25:09.000000',2,1),(30,'SOKOTOFF, RONNIE','','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2008-07-01 12:25:09.000000',2,1),(31,'SANCHEZ, ADRIANNA','','','SX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2008-06-01 12:25:09.000000',2,1),(32,'LAUGHLIN, WILLIS','wlaughlin@ucsd.edu          ','','CX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(33,'RYAN, SUSAN','s4ryan@ucsd.edu             ','','NX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-04-14 06:01:14.000000',2,1);
+INSERT INTO `teacher` VALUES (1,'TSUI, TIMOTHY','me@ucsd.edu','619-555-1212','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(2,'DEL ROSARIO, CINDY','crdelrosario@ucsd.edu       ','8588225000','CX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(3,'SHAFFER, ELIZABETH','eshaffer@ucsd.edu           ','8586771545','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(4,'MURRAY, JENNIFER','jlmurray@ucsd.edu           ','6195437428','NX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(5,'IMEL, ANNE','aimel@ucsd.edu','6195432244','HX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2007-05-08 03:21:25.000000',2,1),(6,'AZAMOV, ALISHERHON','aazamov@ucsd.edu            ','6195436040','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2009-10-16 06:01:06.000000',2,1),(7,'ANTHONY, MELISSA','mlanthony@ucsd.edu          ','','CX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(8,'IMAGAWA, SAYAKA','simagawa@ucsd.edu','8588220218','RX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2009-07-02 13:01:07.000000',2,1),(9,'MENDOZA, LEE','l1ho@ucsd.edu','8586423875','RX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2008-01-01 13:20:09.000000',2,1),(10,'PAE, IVANA','','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(11,'MIN, HYO','hjmin@ucsd.edu              ','','RX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-05-01 06:01:10.000000',2,1),(12,'STARK, JOHN','jmstark@ucsd.edu            ','6195436893','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(13,'BURROLA, ERNESTINA','eburrola@ucsd.edu           ','6195436570','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(14,'VANDERVELDE, JILL','jvandervelde@ucsd.edu','6195940300','HX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2006-08-16 13:10:06.000000',2,1),(15,'RICHTER III, FREDERICK','frichter@ucsd.edu           ','6195435358','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(16,'FERNANDEZ, BERNABE','befernandez@ucsd.edu        ','','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-05-11 06:01:08.000000',2,1),(17,'IMANSJAH, AUDREYANDRA','','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(18,'GARBELLA, MARY','mgarbella@ucsd.edu          ','8585345923','CX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(19,'RUBERG, JOSHUA','jruberg@ucsd.edu','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2009-07-02 13:01:07.000000',2,1),(20,'SHAPUTNIC, CAROLYN','cshaputnic@ucsd.edu         ','8588223698','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(21,'ALKATIB, DIANA','','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2009-11-26 06:01:15.000000',2,1),(22,'LIU, MICHAEL','','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(23,'DELOS ANGELES, MARIA ARABELLE','mdelosangeles@ucsd.edu      ','6195436364','NX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(24,'GISON, DOROTHY','','','NX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2007-09-11 14:00:08.000000',2,1),(25,'SHEA, KAREN','kshea@ucsd.edu              ','6195435753','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(26,'ZEPEDA, KARLA','kzepeda@ucsd.edu            ','6194719210','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(27,'VERA, JESUS','jevera@ucsd.edu             ','8588225604','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(28,'RILEY, TERENCE','tmriley@ucsd.edu','6195432952','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2008-01-19 13:20:08.000000',2,1),(29,'TAING, JENNIFER','jtaing@ucsd.edu','','EX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2008-05-21 12:25:09.000000',2,1),(30,'SOKOTOFF, RONNIE','','','99',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2008-07-01 12:25:09.000000',2,1),(31,'SANCHEZ, ADRIANNA','','','SX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2008-06-01 12:25:09.000000',2,1),(32,'LAUGHLIN, WILLIS','wlaughlin@ucsd.edu          ','','CX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-08-04 06:01:09.000000',1,1),(33,'RYAN, SUSAN','s4ryan@ucsd.edu             ','','NX',NULL,NULL,NULL,NULL,NULL,0.00000000000000,0.00000000000000,NULL,'2010-04-14 06:01:14.000000',2,1),(64,'joeteacher','joe@blow.tuesday.com','123','765765','876876',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-09-25 23:27:56.081748',1,1),(65,'UCSD test1','test@test.com','97897','978987','978987',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-09-26 14:26:21.264865',1,1),(66,'7270','test@test.com','97897','978987','978987',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-09-26 14:28:26.497959',1,1);
 /*!40000 ALTER TABLE `teacher` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -572,35 +717,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-24  9:10:34
-
-
---
--- Table structure for table `schedule`
---
-
-DROP TABLE IF EXISTS `schedule`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `schedule` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
-  `startTime` datetime(6) NOT NULL,
-  `endTime` datetime(6) NOT NULL,
-  `description` longtext,
-  `createdOn` datetime(6) NOT NULL,
-  `isActive` tinyint(1) NOT NULL,
-  `createdBy_id` int(11) NOT NULL,
-  `school_id` int(11) NOT NULL,
-  `teacher_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `schedule_createdBy_id_c938e024_fk_auth_user_id` (`createdBy_id`),
-  KEY `schedule_school_id_8d0196c4_fk_school_id` (`school_id`),
-  KEY `schedule_teacher_id_3c8a1fec_fk_teacher_id` (`teacher_id`),
-  CONSTRAINT `schedule_createdBy_id_c938e024_fk_auth_user_id` FOREIGN KEY (`createdBy_id`) REFERENCES `auth_user` (`id`),
-  CONSTRAINT `schedule_school_id_8d0196c4_fk_school_id` FOREIGN KEY (`school_id`) REFERENCES `school` (`id`),
-  CONSTRAINT `schedule_teacher_id_3c8a1fec_fk_teacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-insert into school (name,email,phone,address1,createdOn,isActive,createdBy_id) values ('UCSD', 'eodonnell@ucsd.edu','555-1212','Gilmore Dr',now(),1,1);
+-- Dump completed on 2018-09-26 12:59:28

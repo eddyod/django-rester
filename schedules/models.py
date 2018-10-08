@@ -5,11 +5,10 @@ from teachers.models import Teacher
 
 class Schedule(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=64)
-    school = models.ForeignKey(School, related_name='classes', on_delete=models.CASCADE, blank=True, null=False)
+    school = models.ForeignKey(School, related_name='schools', on_delete=models.CASCADE, blank=True, null=False)
     teacher = models.ForeignKey(Teacher, related_name='teachers', on_delete=models.CASCADE, blank=True, null=False)
-    startTime = models.DateTimeField(blank=False, null=False)
-    endTime = models.DateTimeField(blank=False, null=False)
+    start = models.DateTimeField(blank=False, null=False)
+    end = models.DateTimeField(blank=False, null=False)
     
     description = models.TextField(blank=True, null=True)
     createdBy = models.ForeignKey(User, related_name='schedule_created_by', on_delete=models.CASCADE)
@@ -21,7 +20,7 @@ class Schedule(models.Model):
         verbose_name = 'Schedule'
         verbose_name_plural = 'Schedules'
         
-    def __str__(self):
-        return self.name
+    #def __str__(self):
+    #    return self.start
 
 

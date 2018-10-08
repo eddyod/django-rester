@@ -24,6 +24,7 @@ class Teacher(models.Model):
         db_table = u'teacher'
         verbose_name = 'Teacher'
         verbose_name_plural = 'Teachers'
+        ordering = ['name']
                                     
     def __str__(self):
         return self.name
