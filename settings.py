@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import os
+import os, datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -87,9 +87,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'scheduler',                      # Or path to database file if using sqlite3.
-        'USER': 'eddyod',                      # Not used with sqlite3.
-        'PASSWORD': 'bir.dee!',                  # Not used with sqlite3.
-        'HOST': '192.168.1.12',                      # Set to empty string for localhost. Not used with sqlite3.
+        'USER': 'eodonnell',                      # Not used with sqlite3.
+        'PASSWORD': 'IrishThunder',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'sql_mode': 'traditional'},
     }
@@ -136,5 +136,18 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
- 'PAGE_SIZE': 20
+ 'PAGE_SIZE': 20, 
+ 'DEFAULT_PERMISSION_CLASSES': (
+ 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+ ),
+ 'DEFAULT_AUTHENTICATION_CLASSES': (
+ 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+ 'rest_framework.authentication.SessionAuthentication',
+ 'rest_framework.authentication.BasicAuthentication',
+ ),
+}
+
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
 }

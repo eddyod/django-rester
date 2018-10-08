@@ -22,6 +22,7 @@ from schedules import views as schedule_views
 from teachers import views as teacher_views
 
 from rest_framework.routers import DefaultRouter
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 router = DefaultRouter(trailing_slash=False)
 router.register(r'schools', school_views.SchoolViewSet)
 router.register(r'schedules', schedule_views.ScheduleViewSet)
@@ -30,6 +31,8 @@ router.register(r'teachers', teacher_views.TeacherViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path(r'api-token-auth/', obtain_jwt_token),
+    path(r'api-token-refresh/', refresh_jwt_token),
     path(r'events', schedule_views.ScheduleListAPIView.as_view(), name='event-list'),
     path(r'list-teachers', teacher_views.TeacherListAPIView.as_view(), name='teacher-list'),
     path(r'list-schools', school_views.SchoolListAPIView.as_view(), name='school-list'),
