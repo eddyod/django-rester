@@ -16,7 +16,7 @@ class Teacher(models.Model):
     latitude = models.DecimalField(max_digits=15, decimal_places=10, null=True)
     longitude = models.DecimalField(max_digits=15, decimal_places=10, null=True)
     description = models.TextField(0, null=True, blank=True)
-    createdBy = models.ForeignKey(User, related_name='teacher_created_by', on_delete=models.CASCADE, default=1)
+    createdBy = models.ForeignKey(User, related_name='teacher_created_by', on_delete=models.CASCADE)
     createdOn = models.DateTimeField("Created on", auto_now_add=True)
     isActive = models.BooleanField(default=True)
 

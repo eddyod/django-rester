@@ -13,7 +13,6 @@ class Schedule(models.Model):
     description = models.TextField(blank=True, null=True)
     createdBy = models.ForeignKey(User, related_name='schedule_created_by', on_delete=models.CASCADE)
     createdOn = models.DateTimeField("Created on", auto_now_add=True)
-    isActive = models.BooleanField(default=False)
 
     class Meta:
         db_table = u'schedule'

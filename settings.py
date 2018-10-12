@@ -138,7 +138,7 @@ REST_FRAMEWORK = {
  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
  'PAGE_SIZE': 20, 
  'DEFAULT_PERMISSION_CLASSES': (
- 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+ 'rest_framework.permissions.IsAuthenticated',
  ),
  'DEFAULT_AUTHENTICATION_CLASSES': (
  'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
@@ -150,4 +150,6 @@ REST_FRAMEWORK = {
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+        'tools.utils.jwt_response_payload_handler', #app_name is name of the app which contains utils.py
 }
