@@ -20,6 +20,7 @@ from django.urls import path, include
 from schools import views as school_views
 from schedules import views as schedule_views
 from teachers import views as teacher_views
+from sqlviews import views as attendance_views
 
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
@@ -33,9 +34,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path(r'api-token-auth/', obtain_jwt_token),
     path(r'api-token-refresh/', refresh_jwt_token),
+    path(r'attendance', attendance_views.AttendanceListAPIView.as_view(), name='attendance-list'),
     path(r'events', schedule_views.ScheduleListAPIView.as_view(), name='event-list'),
-    path(r'list-teachers', teacher_views.TeacherListAPIView.as_view(), name='teacher-list'),
-    path(r'list-schools', school_views.SchoolListAPIView.as_view(), name='school-list'),
 ]
 
 #urlpatterns += router.urls

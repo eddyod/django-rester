@@ -1,20 +1,14 @@
 from .models import Teacher
 from .serializers import TeacherSerializer
-from rest_framework import generics, viewsets
-from rest_framework.filters import SearchFilter
-
-# url = list-teachers
-# has default pagination and search
-class TeacherListAPIView(generics.ListCreateAPIView):
-    queryset = Teacher.objects.all()
-    filter_backends = (SearchFilter,)
-    search_fields = ('name','isActive')
-    serializer_class = TeacherSerializer
+from rest_framework import viewsets
+from rest_framework.filters import SearchFilter, OrderingFilter
 
     
 # url = teachers
-# no paging
+# has default pagination, search and sort
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
-    pagination_class = None
+    filter_backends = (SearchFilter,OrderingFilter)
+    search_fields = ('name','isActive')
+    ordering_fields = '__all__'
     serializer_class = TeacherSerializer

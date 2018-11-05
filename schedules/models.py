@@ -8,11 +8,11 @@ class Schedule(models.Model):
     school = models.ForeignKey(School, related_name='schools', on_delete=models.CASCADE, blank=True, null=False)
     teacher = models.ForeignKey(Teacher, related_name='teachers', on_delete=models.CASCADE, blank=True, null=False)
     start = models.DateTimeField(blank=False, null=False)
-    end = models.DateTimeField(blank=False, null=False)
-    
-    description = models.TextField(blank=True, null=True)
+    end = models.DateTimeField(blank=False, null=False)    
+    pay_rate = models.DecimalField(max_digits=20, decimal_places=2)
     createdBy = models.ForeignKey(User, related_name='schedule_created_by', on_delete=models.CASCADE)
     createdOn = models.DateTimeField("Created on", auto_now_add=True)
+    completed = models.BooleanField(default=True)
 
     class Meta:
         db_table = u'schedule'
