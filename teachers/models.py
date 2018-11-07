@@ -13,7 +13,6 @@ class Teacher(models.Model):
     postalCode = models.CharField(max_length=50, null=True, blank=True)
     province = models.CharField(max_length=500, null=True, blank=True)
     country = models.CharField(max_length=500, null=True, blank=True)
-    createdBy = models.ForeignKey(User, related_name='teacher_created_by', on_delete=models.CASCADE)
     createdOn = models.DateTimeField("Created on", auto_now_add=True)
     isActive = models.BooleanField(default=True)
     

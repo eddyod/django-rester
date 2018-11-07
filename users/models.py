@@ -10,4 +10,12 @@ class User(AbstractUser):
     postalCode = models.CharField(max_length=50, null=True, blank=True)
     province = models.CharField(max_length=500, null=True, blank=True)
     country = models.CharField(max_length=500, null=True, blank=True)
-    createdBy = models.ForeignKey(User, related_name='user_created_by', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = u'auth_user'
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+        ordering = ['last_name']
+                                    
+    def __str__(self):
+        return self.last_name

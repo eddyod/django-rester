@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_filters',
     'schools',
     'schedules',
+    'teachers',
     'sqlviews',
     'users',
     'rest_framework',
