@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'schools',
     'schedules',
     'sqlviews',
-    'teachers',
+    'users',
     'rest_framework',
     'corsheaders'
 ]
@@ -153,3 +153,5 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER':
         'tools.utils.jwt_response_payload_handler', #app_name is name of the app which contains utils.py
 }
+
+AUTH_USER_MODEL = 'users.User'
