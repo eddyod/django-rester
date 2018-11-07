@@ -6,8 +6,8 @@ from teachers.models import Teacher
 
 
 class ScheduleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'start', 'end', 'school_id', 'teacher_id','description','createdBy','createdOn')
-    fields = ['start', 'end', 'school', 'teacher','description','createdBy',]
+    list_display = ('id', 'start', 'end', 'school_id', 'teacher_id','pay_rate','createdBy','createdOn')
+    fields = ['start', 'end', 'school', 'teacher','pay_rate','createdBy',]
     search_fields = (School,Teacher,'start')
     ordering = ['-start']
     

@@ -13,12 +13,11 @@ class Teacher(models.Model):
     postalCode = models.CharField(max_length=50, null=True, blank=True)
     province = models.CharField(max_length=500, null=True, blank=True)
     country = models.CharField(max_length=500, null=True, blank=True)
-    latitude = models.DecimalField(max_digits=15, decimal_places=10, null=True)
-    longitude = models.DecimalField(max_digits=15, decimal_places=10, null=True)
-    description = models.TextField(0, null=True, blank=True)
     createdBy = models.ForeignKey(User, related_name='teacher_created_by', on_delete=models.CASCADE)
     createdOn = models.DateTimeField("Created on", auto_now_add=True)
     isActive = models.BooleanField(default=True)
+    
+    # user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     class Meta:
         db_table = u'teacher'
