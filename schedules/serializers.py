@@ -1,15 +1,15 @@
 from rest_framework import serializers
 from .models import Schedule
-from schools.serializers import SchoolSerializer
-from teachers.serializers import TeacherSerializer
-from schools.models import School
-from teachers.models import Teacher
+from locations.serializers import LocationSerializer
+from employees.serializers import EmployeeSerializer
+from locations.models import Location
+from employees.models import Employee
 
 class ScheduleSerializer(serializers.ModelSerializer):
-    school = SchoolSerializer(many=False, read_only=True)
-    teacher = TeacherSerializer(many=False, read_only=True)
-    school_id = serializers.PrimaryKeyRelatedField(queryset=School.objects.all(), write_only=True, source='school')
-    teacher_id = serializers.PrimaryKeyRelatedField(queryset=Teacher.objects.all(), write_only=True, source='teacher')
+    location = LocationSerializer(many=False, read_only=True)
+    employee = EmployeeSerializer(many=False, read_only=True)
+    location_id = serializers.PrimaryKeyRelatedField(queryset=Location.objects.all(), write_only=True, source='location')
+    employee_id = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all(), write_only=True, source='employee')
      
     
     class Meta:

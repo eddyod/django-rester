@@ -17,17 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from schools import views as school_views
+from locations import views as location_views
 from schedules import views as schedule_views
-from teachers import views as teacher_views
+from employees import views as employee_views
 from sqlviews import views as attendance_views
 
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 router = DefaultRouter(trailing_slash=False)
-router.register(r'schools', school_views.SchoolViewSet)
+router.register(r'locations', location_views.LocationViewSet)
 router.register(r'schedules', schedule_views.ScheduleViewSet)
-router.register(r'teachers', teacher_views.TeacherViewSet)
+router.register(r'employees', employee_views.EmployeeViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

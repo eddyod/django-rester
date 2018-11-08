@@ -41,11 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_filters',
-    'schools',
+    'locations',
     'schedules',
-    'teachers',
+    'employees',
     'sqlviews',
-    'users',
     'rest_framework',
     'corsheaders'
 ]
@@ -89,9 +88,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'scheduler',                      # Or path to database file if using sqlite3.
-        'USER': 'eddyod',                      # Not used with sqlite3.
-        'PASSWORD': 'bir.dee!',                  # Not used with sqlite3.
-        'HOST': '192.168.1.12',                      # Set to empty string for localhost. Not used with sqlite3.
+        'USER': 'eodonnell',                      # Not used with sqlite3.
+        'PASSWORD': 'IrishThunder',                  # Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'sql_mode': 'traditional'},
     }
@@ -155,4 +154,4 @@ JWT_AUTH = {
         'tools.utils.jwt_response_payload_handler', #app_name is name of the app which contains utils.py
 }
 
-AUTH_USER_MODEL = 'users.User'
+#AUTH_USER_MODEL = 'users.User'

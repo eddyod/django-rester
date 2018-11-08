@@ -1,14 +1,14 @@
 from django.contrib import admin
 
 from .models import Schedule
-from schools.models import School
-from teachers.models import Teacher
+from locations.models import Location
+from employees.models import Employee
 
 
 class ScheduleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'start', 'end', 'school_id', 'teacher_id','pay_rate','createdBy','createdOn')
-    fields = ['start', 'end', 'school', 'teacher','pay_rate','createdBy',]
-    search_fields = (School,Teacher,'start')
+    list_display = ('id', 'start', 'end', 'location_id', 'pay_rate','created_id','created')
+    fields = ['start', 'end', 'location', 'user','pay_rate','created_id',]
+    search_fields = (Location,Employee,'start')
     ordering = ['-start']
     
 admin.site.register(Schedule, ScheduleAdmin)
