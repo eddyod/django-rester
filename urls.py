@@ -17,25 +17,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from locations import views as location_views
-from schedules import views as schedule_views
-from employees import views as employee_views
-from sqlviews import views as attendance_views
-
+from scheduler import views as scheduler_views
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 router = DefaultRouter(trailing_slash=False)
-router.register(r'locations', location_views.LocationViewSet)
-router.register(r'schedules', schedule_views.ScheduleViewSet)
-router.register(r'employees', employee_views.EmployeeViewSet)
+router.register(r'locations', scheduler_views.LocationViewSet)
+router.register(r'schedules', scheduler_views.ScheduleViewSet)
+router.register(r'employees', scheduler_views.EmployeeViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path(r'api-token-auth/', obtain_jwt_token),
     path(r'api-token-refresh/', refresh_jwt_token),
-    path(r'attendance', attendance_views.AttendanceListAPIView.as_view(), name='attendance-list'),
-    path(r'events', schedule_views.ScheduleListAPIView.as_view(), name='event-list'),
+    path(r'attendance', scheduler_views.AttendanceListAPIView.as_view(), name='attendance-list'),
+    path(r'events', scheduler_views.ScheduleListAPIView.as_view(), name='event-list'),
+    path(r'api/users', scheduler_views.UserCreate.as_view(), name='account-create'),
 ]
 
 #urlpatterns += router.urls
