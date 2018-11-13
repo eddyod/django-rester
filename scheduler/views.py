@@ -8,8 +8,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Attendance, Employee, Location, Schedule, Site
-from .serializers import AttendanceSerializer, EmployeeSerializer, LocationSerializer, ScheduleSerializer, SiteSerializer,  UserSerializer
+from .models import Attendance, Employee, Location, Schedule, Site, UserSite
+from .serializers import AttendanceSerializer, EmployeeSerializer, LocationSerializer, ScheduleSerializer, SiteSerializer,  UserSerializer, UserSiteSerializer
 
 
 class LargeResultsSetPagination(PageNumberPagination):
@@ -18,13 +18,19 @@ class LargeResultsSetPagination(PageNumberPagination):
     max_page_size = 10000
 
 
+class SidFilter(django_filters.FilterSet):
+    sid = django_filters.NumberFilter(field_name='site_id')
+    class Meta:
+        fields = ['sid']
+
 class AttendanceFilter(django_filters.FilterSet):
     m = django_filters.NumberFilter(field_name='class_month')
     y = django_filters.NumberFilter(field_name='class_year')
+    sid = django_filters.NumberFilter(field_name='site_id')
     tid = django_filters.NumberFilter(field_name='id')
     class Meta:
         model = Attendance
-        fields = ['m', 'y','tid']
+        fields = ['m', 'y','tid','sid']
 
 
 # url = attendance
@@ -41,7 +47,8 @@ class AttendanceListAPIView(generics.ListCreateAPIView):
 # has default pagination, search and sort
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
-    filter_backends = (SearchFilter,OrderingFilter)
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filter_class = SidFilter
     search_fields = ('name','active')
     ordering_fields = '__all__'
     serializer_class = EmployeeSerializer
@@ -51,7 +58,8 @@ class EmployeeViewSet(viewsets.ModelViewSet):
 # default pagination, search and sort
 class LocationViewSet(viewsets.ModelViewSet):
     queryset = Location.objects.all()
-    filter_backends = (SearchFilter,OrderingFilter)
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filter_class = SidFilter
     search_fields = ('name','active')
     ordering_fields = '__all__'
     serializer_class = LocationSerializer
@@ -116,3 +124,27 @@ class UserCreate(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    
+
+class UserSiteFilter(django_filters.FilterSet):
+    aid = django_filters.NumberFilter(field_name='auth_id')
+    sid = django_filters.NumberFilter(field_name='site_id')
+    class Meta:
+        model = UserSite
+        fields = ['aid', 'sid']
+
+
+# url = user_sites
+class UserSiteListAPIView(generics.ListCreateAPIView):
+    queryset = UserSite.objects.all()
+    filter_backends = (DjangoFilterBackend, )
+    filter_class = UserSiteFilter
+    pagination_class = None
+    serializer_class = UserSiteSerializer
+
+class UserSiteViewSet(viewsets.ModelViewSet):
+    queryset = UserSite.objects.all()
+    serializer_class = UserSiteSerializer
+            
+            

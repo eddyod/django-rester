@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 
-from .models import Attendance, Employee, Location, Schedule, Site
+from .models import Attendance, Employee, Location, Schedule, Site, UserSite
 
 
 class AttendanceSerializer(serializers.ModelSerializer):
@@ -47,3 +47,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password')
+
+class UserSiteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserSite
+        fields = "__all__"

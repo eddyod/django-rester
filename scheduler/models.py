@@ -56,7 +56,6 @@ class Employee(models.Model):
     def __str__(self):
         return self.name
 
-
 #@receiver(post_save, sender=Employee)
 #def create_user_employee(sender, instance, created, **kwargs):
 #    if created:
@@ -68,6 +67,15 @@ class Employee(models.Model):
 #@receiver(post_save, sender=Employee)
 #def save_user_employee(sender, instance, **kwargs):
 #    instance.user.save()
+
+class UserSite(models.Model):
+    id = models.AutoField(primary_key=True)
+    site = models.OneToOneField(Site, db_column='site_id', on_delete=models.CASCADE, blank=False, null=False)
+    auth = models.OneToOneField(User,db_column='auth_id', on_delete=models.CASCADE,  blank=False, null=False)
+
+    class Meta:
+        db_table = u'user_site'
+
 
 class Location(models.Model):
     id = models.AutoField(primary_key=True)
