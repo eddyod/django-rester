@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+#from django.db.models.signals import post_save
+#from django.dispatch import receiver
 import random, string
 
 
@@ -18,6 +18,8 @@ class Site(models.Model):
     country = models.CharField(max_length=50, null=True, blank=True)
     created = models.DateTimeField("Created on", auto_now_add=True)
     active = models.BooleanField(default=True)
+    owner = models.ForeignKey(User, db_column='owner_id', blank=False, null=False, on_delete=models.CASCADE,
+        limit_choices_to={'is_staff': True},)
 
 
     class Meta:
@@ -41,8 +43,9 @@ class Employee(models.Model):
     postal_code = models.CharField(max_length=50, null=True, blank=True)
     province = models.CharField(max_length=50, null=True, blank=True)
     country = models.CharField(max_length=50, null=True, blank=True)
+    active = models.BooleanField(default=True)
 
-    user = models.OneToOneField(User,db_column='user_id', on_delete=models.CASCADE)
+    user = models.OneToOneField(User,db_column='user_id', on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         db_table = u'employee'
@@ -54,17 +57,17 @@ class Employee(models.Model):
         return self.name
 
 
-@receiver(post_save, sender=Employee)
-def create_user_employee(sender, instance, created, **kwargs):
-    if created:
-        password =  ''.join(random.sample(string.ascii_lowercase, 8))
-        user = User.objects.create_user(employee=instance, password=password, username = instance.email, email=instance.email, is_staff=1)
-        instance.user_id = user.id
-        instance.save()
+#@receiver(post_save, sender=Employee)
+#def create_user_employee(sender, instance, created, **kwargs):
+#    if created:
+#        password =  ''.join(random.sample(string.ascii_lowercase, 8))
+#        user = User.objects.create_user(employee=instance, password=password, username = instance.email, email=instance.email, is_staff=1)
+#        instance.user_id = user.id
+#        instance.save()
 
-@receiver(post_save, sender=Employee)
-def save_user_employee(sender, instance, **kwargs):
-    instance.user.save()
+#@receiver(post_save, sender=Employee)
+#def save_user_employee(sender, instance, **kwargs):
+#    instance.user.save()
 
 class Location(models.Model):
     id = models.AutoField(primary_key=True)
@@ -72,15 +75,15 @@ class Location(models.Model):
     name = models.CharField(max_length=255, blank=False, null=False, default='Name of location')
     email = models.EmailField()
     phone = models.CharField(max_length=20)
-    address1 = models.CharField(max_length=50, blank=True)
-    address2 = models.CharField(max_length=50, blank=True)
-    city = models.CharField(max_length=50, blank=True)
-    postal_code = models.CharField(max_length=50, blank=True)
-    province = models.CharField(max_length=50, blank=True)
-    country = models.CharField(max_length=50, blank=True)
-    latitude = models.DecimalField(null=True, max_digits=9, decimal_places=4, blank=True)
-    longitude = models.DecimalField(null=True, max_digits=9, decimal_places=4, blank=True)
-    description = models.TextField(blank=True, null=True)
+    address1 = models.CharField(max_length=50, blank=False, null=False)
+    address2 = models.CharField(max_length=50, null=True, blank=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
+    postal_code = models.CharField(max_length=50, null=True, blank=True)
+    province = models.CharField(max_length=50, null=True, blank=True)
+    country = models.CharField(max_length=50, null=True, blank=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=4, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=4, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     created = models.DateTimeField("Created on", auto_now_add=True)
     active = models.BooleanField(default=True)
 
@@ -111,7 +114,8 @@ class Schedule(models.Model):
 
 class Attendance(models.Model):
     id = models.AutoField(primary_key=True)
-    teacher = models.CharField(max_length=50)
+    site_id = models.IntegerField()
+    employee = models.CharField(max_length=50)
     class_month = models.IntegerField()
     class_year = models.IntegerField()
     showed_up = models.IntegerField()

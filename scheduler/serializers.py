@@ -2,8 +2,33 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 
-from .models import Attendance, Location, Schedule, Site, Employee
+from .models import Attendance, Employee, Location, Schedule, Site
 
+
+class AttendanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendance
+        fields = "__all__"
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = '__all__'
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = "__all__"
+
+class ScheduleSerializer(serializers.ModelSerializer):
+    location = LocationSerializer(many=False, read_only=True)
+    employee = EmployeeSerializer(many=False, read_only=True)
+    location_id = serializers.PrimaryKeyRelatedField(queryset=Location.objects.all(), write_only=True, source='location')
+    employee_id = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all(), write_only=True, source='employee')
+
+    class Meta:
+        model = Schedule
+        fields = "__all__"
 
 class SiteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,32 +47,3 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password')
-
-class EmployeeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Employee
-        fields = ('password', 'first_name', 'last_name', 'email',)
-        write_only_fields = ('password',)
-        read_only_fields = ('is_staff', 'is_superuser', 'is_active', 'date_joined',)
-
-class LocationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Location
-        fields = "__all__"
-
-class ScheduleSerializer(serializers.ModelSerializer):
-    location = LocationSerializer(many=False, read_only=True)
-    employee = EmployeeSerializer(many=False, read_only=True)
-    location_id = serializers.PrimaryKeyRelatedField(queryset=Location.objects.all(), write_only=True, source='location')
-    employee_id = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all(), write_only=True, source='employee')
-
-
-    class Meta:
-        model = Schedule
-        fields = "__all__"
-
-class AttendanceSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Attendance
-        fields = "__all__"

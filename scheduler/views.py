@@ -8,14 +8,33 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Attendance, Location, Schedule, Site, Employee
-from .serializers import AttendanceSerializer, LocationSerializer, ScheduleSerializer, SiteSerializer, EmployeeSerializer, UserSerializer
+from .models import Attendance, Employee, Location, Schedule, Site
+from .serializers import AttendanceSerializer, EmployeeSerializer, LocationSerializer, ScheduleSerializer, SiteSerializer,  UserSerializer
 
 
 class LargeResultsSetPagination(PageNumberPagination):
     page_size = 1000
     page_size_query_param = 'page_size'
     max_page_size = 10000
+
+
+class AttendanceFilter(django_filters.FilterSet):
+    m = django_filters.NumberFilter(field_name='class_month')
+    y = django_filters.NumberFilter(field_name='class_year')
+    tid = django_filters.NumberFilter(field_name='id')
+    class Meta:
+        model = Attendance
+        fields = ['m', 'y','tid']
+
+
+# url = attendance
+class AttendanceListAPIView(generics.ListCreateAPIView):
+    queryset = Attendance.objects.all().order_by('employee')
+    filter_backends = (DjangoFilterBackend, SearchFilter)
+    search_fields = ('employee')
+    filter_class = AttendanceFilter
+    pagination_class = None
+    serializer_class = AttendanceSerializer
 
 
 # url = employees
@@ -69,25 +88,14 @@ class ScheduleViewSet(viewsets.ModelViewSet):
     ordering_fields = '__all__'
     serializer_class = ScheduleSerializer
 
-
-
-class AttendanceFilter(django_filters.FilterSet):
-    m = django_filters.NumberFilter(field_name='class_month')
-    y = django_filters.NumberFilter(field_name='class_year')
-    tid = django_filters.NumberFilter(field_name='id')
-    class Meta:
-        model = Attendance
-        fields = ['m', 'y','tid']
-
-
-# url = attendance
-class AttendanceListAPIView(generics.ListCreateAPIView):
-    queryset = Attendance.objects.all().order_by('teacher')
-    filter_backends = (DjangoFilterBackend, SearchFilter)
-    search_fields = ('school','teacher')
-    filter_class = AttendanceFilter
-    pagination_class = None
-    serializer_class = AttendanceSerializer
+# url = sites
+# default pagination, search and sort
+class SiteViewSet(viewsets.ModelViewSet):
+    queryset = Site.objects.all()
+    filter_backends = (SearchFilter,OrderingFilter)
+    search_fields = ('name',)
+    ordering_fields = '__all__'
+    serializer_class = SiteSerializer
 
 # for JWT
 class UserViewSet(viewsets.ModelViewSet):

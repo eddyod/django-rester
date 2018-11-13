@@ -21,9 +21,10 @@ from scheduler import views as scheduler_views
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 router = DefaultRouter(trailing_slash=False)
+router.register(r'employees', scheduler_views.EmployeeViewSet)
 router.register(r'locations', scheduler_views.LocationViewSet)
 router.register(r'schedules', scheduler_views.ScheduleViewSet)
-router.register(r'employees', scheduler_views.EmployeeViewSet)
+router.register(r'sites', scheduler_views.SiteViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
