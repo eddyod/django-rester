@@ -70,8 +70,8 @@ class Employee(models.Model):
 
 class UserSite(models.Model):
     id = models.AutoField(primary_key=True)
-    site = models.OneToOneField(Site, db_column='site_id', on_delete=models.CASCADE, blank=False, null=False)
-    auth = models.OneToOneField(User,db_column='auth_id', on_delete=models.CASCADE,  blank=False, null=False)
+    auth_id = models.OneToOneField(User,db_column='auth_id', on_delete=models.CASCADE,  blank=False, null=False)
+    site_id = models.OneToOneField(Site, db_column='site_id', on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
         db_table = u'user_site'

@@ -19,18 +19,18 @@ class LargeResultsSetPagination(PageNumberPagination):
 
 
 class SidFilter(django_filters.FilterSet):
-    sid = django_filters.NumberFilter(field_name='site_id')
+    site_id = django_filters.NumberFilter(field_name='site_id')
     class Meta:
-        fields = ['sid']
+        fields = ['site_id']
 
 class AttendanceFilter(django_filters.FilterSet):
     m = django_filters.NumberFilter(field_name='class_month')
     y = django_filters.NumberFilter(field_name='class_year')
-    sid = django_filters.NumberFilter(field_name='site_id')
+    site_id = django_filters.NumberFilter(field_name='site_id')
     tid = django_filters.NumberFilter(field_name='id')
     class Meta:
         model = Attendance
-        fields = ['m', 'y','tid','sid']
+        fields = ['m', 'y','tid','site_id']
 
 
 # url = attendance
@@ -128,11 +128,11 @@ class UserCreate(APIView):
     
 
 class UserSiteFilter(django_filters.FilterSet):
-    aid = django_filters.NumberFilter(field_name='auth_id')
-    sid = django_filters.NumberFilter(field_name='site_id')
+    auth_id = django_filters.NumberFilter(field_name='auth_id')
+    site_id = django_filters.NumberFilter(field_name='site_id')
     class Meta:
         model = UserSite
-        fields = ['aid', 'sid']
+        fields = ['auth_id', 'site_id']
 
 
 # url = user_sites
