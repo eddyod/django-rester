@@ -3,12 +3,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.pagination import PageNumberPagination
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Attendance, Employee, Location, Schedule, Site, UserSite
+from .models import Attendance, Employee, Location, Schedule, Site, User, UserSite
 from .serializers import AttendanceSerializer, EmployeeSerializer, LocationSerializer, ScheduleSerializer, SiteSerializer,  UserSerializer, UserSiteSerializer
 
 
@@ -71,9 +71,10 @@ class ScheduleFilter(django_filters.FilterSet):
     employee = django_filters.CharFilter(field_name='user.name')
     location_id = django_filters.NumberFilter(field_name='location_id')
     employee_id = django_filters.NumberFilter(field_name='user_id')
+    site_id = django_filters.NumberFilter(field_name='site_id')
     class Meta:
         model = Schedule
-        fields = ['start', 'start_lte', 'start_gte', 'location', 'employee', 'location_id', 'employee_id']
+        fields = ['start', 'start_lte', 'start_gte', 'location', 'employee', 'location_id', 'employee_id','site_id']
 
 # url = events
 # pagination for the calendar
@@ -90,8 +91,9 @@ class ScheduleListAPIView(generics.ListCreateAPIView):
 # regular pagination, search and sort
 class ScheduleViewSet(viewsets.ModelViewSet):
     queryset = Schedule.objects.all()
-    #filter_class = ScheduleFilter
     filter_backends = (SearchFilter, OrderingFilter)
+    filter_backends = (DjangoFilterBackend, SearchFilter, OrderingFilter)
+    filter_class = ScheduleFilter
     search_fields = ('location__name','employee__last_name','start')
     ordering_fields = '__all__'
     serializer_class = ScheduleSerializer
@@ -112,6 +114,13 @@ class UserViewSet(viewsets.ModelViewSet):
     search_fields = ('name','active')
     ordering_fields = '__all__'
     serializer_class = UserSerializer
+
+# for current user: currentuser
+class CurrentUserView(APIView):
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
 
 # for register user
 class UserCreate(APIView):

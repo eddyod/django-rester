@@ -36,6 +36,7 @@ urlpatterns = [
     path(r'user_site', scheduler_views.UserSiteListAPIView.as_view(), name='user-site'),
     path(r'events', scheduler_views.ScheduleListAPIView.as_view(), name='event-list'),
     path(r'api/users', scheduler_views.UserCreate.as_view(), name='account-create'),
+    path(r'currentuser', scheduler_views.CurrentUserView.as_view(), name='current-user'),
 ]
 
 #urlpatterns += router.urls

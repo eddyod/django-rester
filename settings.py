@@ -138,4 +138,4 @@ JWT_AUTH = {
         'tools.utils.jwt_response_payload_handler', #app_name is name of the app which contains utils.py
 }
 
-#AUTH_USER_MODEL = 'scheduler.User'
+AUTH_USER_MODEL = 'scheduler.User'
