@@ -25,7 +25,7 @@ class Site(models.Model):
     country = models.CharField(max_length=50, null=True, blank=True)
     created = models.DateTimeField("Created on", auto_now_add=True)
     active = models.BooleanField(default=True)
-    owner = models.ForeignKey(User, db_column='user_id', blank=False, null=False, on_delete=models.CASCADE,
+    owner = models.ForeignKey(User, db_column='owner_id', blank=False, null=False, on_delete=models.CASCADE,
         limit_choices_to={'is_staff': True},)
 
 
