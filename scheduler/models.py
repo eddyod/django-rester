@@ -75,14 +75,6 @@ class Employee(models.Model):
 #def save_user_employee(sender, instance, **kwargs):
 #    instance.user.save()
 
-class UserSite(models.Model):
-    id = models.AutoField(primary_key=True)
-    auth_id = models.OneToOneField(User,db_column='auth_id', on_delete=models.CASCADE,  blank=False, null=False)
-    site_id = models.OneToOneField(Site, db_column='site_id', on_delete=models.CASCADE, blank=False, null=False)
-
-    class Meta:
-        db_table = u'user_site'
-
 
 class Location(models.Model):
     id = models.AutoField(primary_key=True)
@@ -126,6 +118,14 @@ class Schedule(models.Model):
         db_table = u'schedule'
         verbose_name = 'Schedule'
         verbose_name_plural = 'Schedules'
+
+class UserSite(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User,db_column='auth_id', on_delete=models.CASCADE,  blank=False, null=False)
+    site = models.OneToOneField(Site, db_column='site_id', on_delete=models.CASCADE, blank=False, null=False)
+
+    class Meta:
+        db_table = u'user_site'
 
 class Attendance(models.Model):
     id = models.AutoField(primary_key=True)

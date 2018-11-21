@@ -137,23 +137,20 @@ class UserCreate(APIView):
     
 
 class UserSiteFilter(django_filters.FilterSet):
-    auth_id = django_filters.NumberFilter(field_name='auth_id')
+    user_id = django_filters.NumberFilter(field_name='user_id')
     site_id = django_filters.NumberFilter(field_name='site_id')
     class Meta:
         model = UserSite
-        fields = ['auth_id', 'site_id']
+        fields = ['user_id', 'site_id']
 
 
 # url = user_sites
-class UserSiteListAPIView(generics.ListCreateAPIView):
+class UserSiteViewSet(viewsets.ModelViewSet):
     queryset = UserSite.objects.all()
-    filter_backends = (DjangoFilterBackend, )
+    filter_backends = (DjangoFilterBackend, SearchFilter)
     filter_class = UserSiteFilter
     pagination_class = None
     serializer_class = UserSiteSerializer
 
-class UserSiteViewSet(viewsets.ModelViewSet):
-    queryset = UserSite.objects.all()
-    serializer_class = UserSiteSerializer
             
             

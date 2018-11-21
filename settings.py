@@ -72,9 +72,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'scheduler',                      # Or path to database file if using sqlite3.
-        'USER': 'eodonnell',                      # Not used with sqlite3.
-        'PASSWORD': 'IrishThunder',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
+        'USER': 'eddyod',                      # Not used with sqlite3.
+        'PASSWORD': 'bir.dee!',                  # Not used with sqlite3.
+        'HOST': '192.168.1.12',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'sql_mode': 'traditional'},
     }
@@ -123,7 +123,7 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
  'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
  'PAGE_SIZE': 20,
- 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+# 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticatedOrReadOnly',),
  'DEFAULT_AUTHENTICATION_CLASSES': (
  'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
  'rest_framework.authentication.SessionAuthentication',
