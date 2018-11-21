@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 import random, string
 
 class User(AbstractUser):
-    main_site = models.IntegerField(db_column='main_site_id', null=True)
+    #main_site = models.IntegerField(db_column='main_site_id', null=True)
     class Meta:
         db_table = u'auth_user'
         verbose_name = 'User'

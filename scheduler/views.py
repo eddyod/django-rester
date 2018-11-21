@@ -6,7 +6,7 @@ from rest_framework.pagination import PageNumberPagination
 #from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 
 from .models import Attendance, Employee, Location, Schedule, Site, User, UserSite
 from .serializers import AttendanceSerializer, EmployeeSerializer, LocationSerializer, ScheduleSerializer, SiteSerializer,  UserSerializer, UserSiteSerializer
@@ -125,6 +125,7 @@ class CurrentUserView(APIView):
 # for register user
 class UserCreate(APIView):
     """ Creates the user. """
+    permission_classes = [permissions.AllowAny]
     def post(self, request, format='json'):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -133,8 +134,6 @@ class UserCreate(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    
 
 class UserSiteFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter(field_name='user_id')
