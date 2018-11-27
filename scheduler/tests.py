@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase
-from django.contrib.auth.models import User
-#from .models import User
+#from django.contrib.auth.models import User
+from .models import User
 from rest_framework import status
 
 class AccountsTest(APITestCase):
@@ -17,6 +17,8 @@ class AccountsTest(APITestCase):
         Ensure we can create a new user and a valid token is created with it.
         """
         data = {
+            'first_name': 'Joe First',
+            'last_name': 'Joe Last',
             'username': 'foobar',
             'email': 'foobar@example.com',
             'password': 'somepassword'
@@ -38,6 +40,8 @@ class AccountsTest(APITestCase):
         Ensure user is not created for password lengths less than 8.
         """
         data = {
+            'first_name': 'Joe First',
+            'last_name': 'Joe Last',
                 'username': 'foobar',
                 'email': 'foobarbaz@example.com',
                 'password': 'foo'
@@ -50,6 +54,8 @@ class AccountsTest(APITestCase):
 
     def test_create_user_with_no_password(self):
         data = {
+            'first_name': 'Joe First',
+            'last_name': 'Joe Last',
                 'username': 'foobar',
                 'email': 'foobarbaz@example.com',
                 'password': ''
@@ -62,6 +68,8 @@ class AccountsTest(APITestCase):
 
     def test_create_user_with_too_long_username(self):
         data = {
+            'first_name': 'Joe First',
+            'last_name': 'Joe Last',
             'username': 'foo'*30,
             'email': 'foobarbaz@example.com',
             'password': 'foobar'
@@ -74,6 +82,8 @@ class AccountsTest(APITestCase):
 
     def test_create_user_with_no_username(self):
         data = {
+            'first_name': 'Joe First',
+            'last_name': 'Joe Last',
                 'username': '',
                 'email': 'foobarbaz@example.com',
                 'password': 'foobar'
@@ -86,6 +96,8 @@ class AccountsTest(APITestCase):
 
     def test_create_user_with_preexisting_username(self):
         data = {
+            'first_name': 'Joe First',
+            'last_name': 'Joe Last',
                 'username': 'testuser',
                 'email': 'user@example.com',
                 'password': 'testuser'
@@ -99,6 +111,8 @@ class AccountsTest(APITestCase):
 
     def test_create_user_with_preexisting_email(self):
         data = {
+            'first_name': 'Joe First',
+            'last_name': 'Joe Last',
             'username': 'testuser2',
             'email': 'test@example.com',
             'password': 'testuser'
@@ -111,6 +125,8 @@ class AccountsTest(APITestCase):
 
     def test_create_user_with_invalid_email(self):
         data = {
+            'first_name': 'Joe First',
+            'last_name': 'Joe Last',
             'username': 'foobarbaz',
             'email':  'testing',
             'passsword': 'foobarbaz'
@@ -124,6 +140,8 @@ class AccountsTest(APITestCase):
 
     def test_create_user_with_no_email(self):
         data = {
+            'first_name': 'Joe First',
+            'last_name': 'Joe Last',
                 'username' : 'foobar',
                 'email': '',
                 'password': 'foobarbaz'

@@ -140,3 +140,4 @@ class Attendance(models.Model):
         db_table = u'attendance'
         verbose_name = 'Attendance'
         verbose_name_plural = 'Attendance'
+        managed = False
