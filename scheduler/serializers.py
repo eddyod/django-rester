@@ -36,7 +36,7 @@ class SiteSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializerXXX(serializers.ModelSerializer):
     first_name = serializers.CharField(required=False)
     last_name = serializers.CharField(required=False)
     email = serializers.EmailField(required=True,validators=[UniqueValidator(queryset=User.objects.all())])
@@ -56,6 +56,10 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'first_name','last_name','username', 'email', 'is_superuser', 'password', 'is_staff')
 
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id','username','email')
 
 class UserSiteSerializer(serializers.ModelSerializer):
     user = UserSerializer(many=False, read_only=True)

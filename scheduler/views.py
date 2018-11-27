@@ -123,7 +123,7 @@ class CurrentUserView(APIView):
 
 
 # for register user
-class UserCreate(APIView):
+class UserCreate(generics.ListCreateAPIView):
     """ Creates the user. """
     permission_classes = [permissions.AllowAny]
     def post(self, request, format='json'):
@@ -135,6 +135,11 @@ class UserCreate(APIView):
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    
 class UserSiteFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter(field_name='user_id')
     site_id = django_filters.NumberFilter(field_name='site_id')
