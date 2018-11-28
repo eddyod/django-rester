@@ -26,7 +26,6 @@ router.register(r'locations', scheduler_views.LocationViewSet)
 router.register(r'schedules', scheduler_views.ScheduleViewSet)
 router.register(r'sites', scheduler_views.SiteViewSet)
 router.register(r'user_sites', scheduler_views.UserSiteViewSet)
-router.register(r'api/users', scheduler_views.UserViewSet)
 
 
 urlpatterns = [
@@ -37,8 +36,9 @@ urlpatterns = [
     path(r'api-token-refresh/', refresh_jwt_token),
     path(r'attendance', scheduler_views.AttendanceListAPIView.as_view(), name='attendance-list'),
     path(r'events', scheduler_views.ScheduleListAPIView.as_view(), name='event-list'),
-    #path(r'api/users', scheduler_views.UserCreateView.as_view(), name='account-create'),
-    #path(r'api/users', scheduler_views.UserViewSet, name='account-create'),
+    path(r'api/users', scheduler_views.UserCreateView.as_view(), name='account-create'),
+    path(r'api/sites', scheduler_views.SiteCreateView.as_view(), name='site-create'),
+    path(r'api/user_sites', scheduler_views.UserSiteCreateView.as_view(), name='user_site-create'),
     path(r'currentuser', scheduler_views.CurrentUserView.as_view(), name='current-user'),
 ]
 

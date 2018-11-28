@@ -183,12 +183,12 @@ DROP TABLE IF EXISTS `user_site`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_site` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `auth_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `site_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `K__user_site_auth` (`auth_id`),
+  KEY `K__user_site_auth` (`user_id`),
   KEY `K__user_site_site` (`site_id`),
-  CONSTRAINT `FK__user_site_auth_id` FOREIGN KEY (`auth_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `FK__user_site_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
   CONSTRAINT `FK__user_site_site_id` FOREIGN KEY (`site_id`) REFERENCES `site` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

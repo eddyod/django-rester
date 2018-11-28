@@ -125,23 +125,9 @@ class CurrentUserView(APIView):
         return Response(serializer.data)
 
 
-# for register user
-class UserCreateXXX(generics.ListCreateAPIView):
-    """ Creates the user. """
-    permission_classes = [permissions.AllowAny]
-    def post(self, request, format='json'):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            if user:
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+# for anonymous user creation
+# url=api/users
 class UserCreateView(APIView):
-    """ 
-    Creates the user. 
-    """
     permission_classes = [permissions.AllowAny]
 
     def post(self, request, format='json'):
@@ -155,19 +141,36 @@ class UserCreateView(APIView):
                 return Response(json, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class CreateUserView(CreateAPIView):
-
-    model = get_user_model()
-    permission_classes = [
-        permissions.AllowAny # Or anon users can't register
-    ]
-    serializer_class = UserSerializer
     
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+# for anonymous site creation
+# url=api/sites
+class SiteCreateView(APIView):
     permission_classes = [permissions.AllowAny]
-    serializer_class = UserSerializer
+
+    def post(self, request, format='json'):
+        serializer = SiteSerializer(data=request.data)
+        if serializer.is_valid():
+            site = serializer.save()
+            if site:
+                json = serializer.data
+                return Response(json, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+# for anonymous user_site creation
+# url=api/user_sites
+class UserSiteCreateView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, format='json'):
+        serializer = UserSiteSerializer(data=request.data)
+        if serializer.is_valid():
+            user_site = serializer.save()
+            if user_site:
+                json = serializer.data
+                return Response(json, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class UserSiteFilter(django_filters.FilterSet):
     user_id = django_filters.NumberFilter(field_name='user_id')
