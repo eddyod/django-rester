@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'django_filters',
     'scheduler',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'django_pdb'
 ]
 
 MIDDLEWARE = [
@@ -42,6 +43,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_pdb.middleware.PdbMiddleware',
 ]
 
 ROOT_URLCONF = 'urls'
@@ -72,8 +74,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'scheduler',                      # Or path to database file if using sqlite3.
-        'USER': 'eddyod',                      # Not used with sqlite3.
-        'PASSWORD': 'bir.dee!',                  # Not used with sqlite3.
+        'USER': 'eodonnell',                      # Not used with sqlite3.
+        'PASSWORD': 'IrishThunder',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'sql_mode': 'traditional'},

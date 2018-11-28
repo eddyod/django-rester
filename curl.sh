@@ -1,2 +1,3 @@
-curl -X POST -H 'Content-Type:application/json' http://192.168.1.12:8000/api/users \
--d '{"username":"jason", "password":"jason123", "email":"jasonodonnell@yahoo.com", "first_name":"Jason","last_name":"OD"}'
+curl -X POST -H 'Content-Type:application/json' http://10.195.4.147:8000/api/users \
+-d '{ "email":"eddyod7@yahoo.com", "first_name":"Edward", "last_name":"ODonnell", "password":"jason123", "username":"eddyod7"}'
+

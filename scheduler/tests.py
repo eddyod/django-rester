@@ -66,6 +66,62 @@ class AccountsTest(APITestCase):
         self.assertEqual(User.objects.count(), 1)
         self.assertEqual(len(response.data['password']), 1)
 
+    def test_create_user_with_empty_first_name(self):
+        data = {
+            'first_name': '',
+            'last_name': 'Joe Last',
+                'username': 'foobar',
+                'email': 'foobarbaz@example.com',
+                'password': 'sdfsdfsfe'
+        }
+
+        response = self.client.post(self.create_url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(len(response.data['first_name']), 1)
+
+    def test_create_user_with_NULL_first_name(self):
+        data = {
+            'first_name': None,
+            'last_name': 'Joe Last',
+                'username': 'foobar',
+                'email': 'foobarbaz@example.com',
+                'password': 'asdfasdfasdf354'
+        }
+
+        response = self.client.post(self.create_url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(len(response.data['first_name']), 1)
+
+    def test_create_user_with_empty_last_name(self):
+        data = {
+            'first_name': 'joe',
+            'last_name': '',
+                'username': 'foobar',
+                'email': 'foobarbaz@example.com',
+                'password': 'asdfksjldkj'
+        }
+
+        response = self.client.post(self.create_url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(len(response.data['last_name']), 1)
+
+    def test_create_user_with_NULL_last_name(self):
+        data = {
+            'first_name': 'sdfsf',
+            'last_name': None,
+                'username': 'foobar',
+                'email': 'foobarbaz@example.com',
+                'password': 'sldkjflskjdflskjd'
+        }
+
+        response = self.client.post(self.create_url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(len(response.data['last_name']), 1)
+
     def test_create_user_with_too_long_username(self):
         data = {
             'first_name': 'Joe First',

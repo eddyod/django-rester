@@ -5,8 +5,11 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.pagination import PageNumberPagination
 #from django.contrib.auth.models import User
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
+from django.contrib.auth import get_user_model # 
+
 
 from .models import Attendance, Employee, Location, Schedule, Site, User, UserSite
 from .serializers import AttendanceSerializer, EmployeeSerializer, LocationSerializer, ScheduleSerializer, SiteSerializer,  UserSerializer, UserSiteSerializer
@@ -123,7 +126,7 @@ class CurrentUserView(APIView):
 
 
 # for register user
-class UserCreate(generics.ListCreateAPIView):
+class UserCreateXXX(generics.ListCreateAPIView):
     """ Creates the user. """
     permission_classes = [permissions.AllowAny]
     def post(self, request, format='json'):
@@ -135,9 +138,35 @@ class UserCreate(generics.ListCreateAPIView):
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class UserCreateView(APIView):
+    """ 
+    Creates the user. 
+    """
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, format='json'):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            if user:
+                #token = Token.objects.create(user=user)
+                json = serializer.data
+                #json['token'] = token.key
+                return Response(json, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class CreateUserView(CreateAPIView):
+
+    model = get_user_model()
+    permission_classes = [
+        permissions.AllowAny # Or anon users can't register
+    ]
+    serializer_class = UserSerializer
     
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
+    permission_classes = [permissions.AllowAny]
     serializer_class = UserSerializer
     
 class UserSiteFilter(django_filters.FilterSet):
