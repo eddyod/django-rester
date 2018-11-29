@@ -73,7 +73,7 @@ class ScheduleFilter(django_filters.FilterSet):
     location = django_filters.CharFilter(field_name='location.name')
     employee = django_filters.CharFilter(field_name='user.name')
     location_id = django_filters.NumberFilter(field_name='location_id')
-    employee_id = django_filters.NumberFilter(field_name='user_id')
+    employee_id = django_filters.NumberFilter(field_name='employee_id')
     site_id = django_filters.NumberFilter(field_name='site_id')
     class Meta:
         model = Schedule

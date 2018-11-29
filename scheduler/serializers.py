@@ -65,4 +65,4 @@ class UserSiteSerializer(serializers.ModelSerializer):
     site_id = serializers.PrimaryKeyRelatedField(queryset=Site.objects.all(), write_only=True, source='site')
     class Meta:
         model = UserSite
-        fields = ('user','site', 'user_id', 'site_id')
+        fields = ('user','site', 'user_id','site_id')
