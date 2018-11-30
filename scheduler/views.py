@@ -3,7 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.pagination import PageNumberPagination
-#from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
@@ -11,7 +11,7 @@ from rest_framework import status, permissions
 from django.contrib.auth import get_user_model # 
 
 
-from .models import Attendance, Employee, Location, Schedule, Site, User, UserSite
+from .models import Attendance, Employee, Location, Schedule, Site, UserSite
 from .serializers import AttendanceSerializer, EmployeeSerializer, LocationSerializer, ScheduleSerializer, SiteSerializer,  UserSerializer, UserSiteSerializer
 
 

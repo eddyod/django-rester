@@ -1,16 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-#from django.contrib.auth.models import User
+#from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 #from django.db.models.signals import post_save
 #from django.dispatch import receiver
 import random, string
 
-class User(AbstractUser):
-    #main_site = models.IntegerField(db_column='main_site_id', null=True)
-    class Meta:
-        db_table = u'auth_user'
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
+#class User(AbstractUser):
+#    #main_site = models.IntegerField(db_column='main_site_id', null=True)
+#    class Meta:
+#        db_table = u'auth_user'
+#        verbose_name = 'User'
+#        verbose_name_plural = 'Users'
 
 class Site(models.Model):
     id = models.AutoField(primary_key=True)

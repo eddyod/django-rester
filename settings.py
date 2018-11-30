@@ -70,13 +70,13 @@ WSGI_APPLICATION = 'wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'scheduler',                      # Or path to database file if using sqlite3.
-        'USER': 'eddyod',                      # Not used with sqlite3.
+        'USER': 'rester',                      # Not used with sqlite3.
         'PASSWORD': 'bir.dee!',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
-        'OPTIONS': {'sql_mode': 'traditional'},
+#        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
+#        'OPTIONS': {'sql_mode': 'traditional'},
     }
 }
 
@@ -138,4 +138,4 @@ JWT_AUTH = {
         'tools.utils.jwt_response_payload_handler', #app_name is name of the app which contains utils.py
 }
 
-AUTH_USER_MODEL = 'scheduler.User'
+#AUTH_USER_MODEL = 'scheduler.User'
