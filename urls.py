@@ -32,13 +32,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
     path(r'api-auth', include('rest_framework.urls', namespace='rest_framework')),
-    path(r'api-token-auth/', obtain_jwt_token),
-    path(r'api-token-refresh/', refresh_jwt_token),
+    path(r'login', obtain_jwt_token),
+    path(r'token-refresh/', refresh_jwt_token),
     path(r'attendance', scheduler_views.AttendanceListAPIView.as_view(), name='attendance-list'),
     path(r'events', scheduler_views.ScheduleListAPIView.as_view(), name='event-list'),
-    path(r'api/users', scheduler_views.UserCreateView.as_view(), name='account-create'),
-    path(r'api/sites', scheduler_views.SiteCreateView.as_view(), name='site-create'),
-    path(r'api/user_sites', scheduler_views.UserSiteCreateView.as_view(), name='user_site-create'),
+    path(r'users/register', scheduler_views.UserCreateView.as_view(), name='account-create'),
+    path(r'users/<int:id>/sites', scheduler_views.SiteCreateView.as_view(), name='site-create'),
+    path(r'user_sites', scheduler_views.UserSiteCreateView.as_view(), name='user_site-create'),
     path(r'currentuser', scheduler_views.CurrentUserView.as_view(), name='current-user'),
 ]
 

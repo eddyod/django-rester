@@ -1,7 +1,7 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from django.contrib.auth.models import User
-#from .models import User
+from .models import Site, UserSite
 from rest_framework import status
 
 class AccountsTest(APITestCase):
@@ -11,6 +11,35 @@ class AccountsTest(APITestCase):
         # URL for creating an account.
         self.create_url = reverse('account-create')
         self.assertEqual(User.objects.count(), 1)
+
+    def test_create_site(self):
+        """
+        Ensure we can create a new site which auto adds user site.
+        """
+        data = {
+            'name': 'Joe First',
+            'created': '2018-12-14',
+            'active': '1',
+            'owner': '1',
+        }
+
+        self.assertEqual(User.objects.count(), 1)
+        self.assertEqual(Site.objects.count(), 0)
+        self.assertEqual(UserSite.objects.count(), 0)
+        self.create_url = reverse('site-create', args=[1])
+        print('self.create_url',self.create_url)
+        response = self.client.post(self.create_url , data, format='json')
+        print(response)
+        # Additionally, we want to return the username and email upon successful creation.
+        self.assertEqual(response.data['name'], data['name'])
+
+        # We want to make sure we have one site in the database..
+        self.assertEqual(Site.objects.count(), 1)
+        # We want to make sure we have one user_site in the database..
+        self.assertEqual(UserSite.objects.count(), 1)
+        # And that we're returning a 201 created code.
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
 
     def test_create_user(self):
         """

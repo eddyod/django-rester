@@ -147,7 +147,7 @@ class UserCreateView(APIView):
 class SiteCreateView(APIView):
     permission_classes = [permissions.AllowAny]
 
-    def post(self, request, format='json'):
+    def post(self, request, id, format='json'):
         serializer = SiteSerializer(data=request.data)
         if serializer.is_valid():
             site = serializer.save()

@@ -1,8 +1,8 @@
 from django.db import models
 #from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
-#from django.db.models.signals import post_save
-#from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import random, string
 
 #class User(AbstractUser):
@@ -25,8 +25,8 @@ class Site(models.Model):
     country = models.CharField(max_length=50, null=True, blank=True)
     created = models.DateTimeField("Created on", auto_now_add=True)
     active = models.BooleanField(default=True)
-    owner = models.ForeignKey(User, db_column='owner_id', blank=False, null=False, on_delete=models.CASCADE,
-        limit_choices_to={'is_staff': True},)
+    owner = models.ForeignKey(User, db_column='owner_id', blank=False, null=False, on_delete=models.CASCADE)
+    #    limit_choices_to={'is_staff': True},)
 
 
     class Meta:
@@ -62,18 +62,6 @@ class Employee(models.Model):
 
     def __str__(self):
         return self.name
-
-#@receiver(post_save, sender=Employee)
-#def create_user_employee(sender, instance, created, **kwargs):
-#    if created:
-#        password =  ''.join(random.sample(string.ascii_lowercase, 8))
-#        user = User.objects.create_user(employee=instance, password=password, username = instance.email, email=instance.email, is_staff=1)
-#        instance.user_id = user.id
-#        instance.save()
-
-#@receiver(post_save, sender=Employee)
-#def save_user_employee(sender, instance, **kwargs):
-#    instance.user.save()
 
 
 class Location(models.Model):
@@ -125,6 +113,20 @@ class UserSite(models.Model):
     site = models.OneToOneField(Site, db_column='site_id', on_delete=models.CASCADE, blank=False, null=False)
     class Meta:
         db_table = u'user_site'
+
+@receiver(post_save, sender=Site)
+def create_user_site(sender, instance, created, **kwargs):
+    if created:
+#        password =  ''.join(random.sample(string.ascii_lowercase, 8))
+#        user = User.objects.create_user(employee=instance, password=password, username = instance.email, email=instance.email, is_staff=1)
+        user = User.objects.get(id=instance.owner.id)
+        #instance.user_id = user.id
+        #instance.save()
+        UserSite.objects.create(user=user, site=instance)
+
+#@receiver(post_save, sender=Employee)
+#def save_user_employee(sender, instance, **kwargs):
+#    instance.user.save()
 
 class Attendance(models.Model):
     id = models.AutoField(primary_key=True)
