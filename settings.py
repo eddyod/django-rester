@@ -73,7 +73,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'scheduler',                      # Or path to database file if using sqlite3.
         'USER': 'rester',                      # Not used with sqlite3.
-        'PASSWORD': 'bir.dee!',                  # Not used with sqlite3.
+        'PASSWORD': '0724.bir',                  # Not used with sqlite3.
         'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
 #        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'sql_mode': 'traditional'},
