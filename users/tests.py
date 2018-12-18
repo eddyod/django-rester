@@ -1,7 +1,9 @@
 from django.urls import reverse
 from rest_framework.test import APITestCase
-from django.contrib.auth.models import User
-from .models import Site, UserSite
+#from django.contrib.auth.models import User
+#from .models import UserSite
+from users.models import User
+from sites.models import Site
 from rest_framework import status
 
 class AccountsTest(APITestCase):
@@ -20,23 +22,27 @@ class AccountsTest(APITestCase):
             'name': 'Joe First',
             'created': '2018-12-14',
             'active': '1',
-            'owner': '1',
+            'owner': 1,
         }
-
+        
+        user = User.objects.get(id=1)
+        self.assertEqual(user.company, None)
+        
         self.assertEqual(User.objects.count(), 1)
         self.assertEqual(Site.objects.count(), 0)
-        self.assertEqual(UserSite.objects.count(), 0)
+        #self.assertEqual(UserSite.objects.count(), 0)
         self.create_url = reverse('site-create', args=[1])
-        print('self.create_url',self.create_url)
         response = self.client.post(self.create_url , data, format='json')
-        print(response)
         # Additionally, we want to return the username and email upon successful creation.
         self.assertEqual(response.data['name'], data['name'])
 
         # We want to make sure we have one site in the database..
         self.assertEqual(Site.objects.count(), 1)
-        # We want to make sure we have one user_site in the database..
-        self.assertEqual(UserSite.objects.count(), 1)
+        # We want to make sure site_id got updated in user
+        user = User.objects.get(id=1)
+        self.assertEqual(user.company, data['owner'])
+        
+        #self.assertEqual(UserSite.objects.count(), 1)
         # And that we're returning a 201 created code.
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -56,7 +62,6 @@ class AccountsTest(APITestCase):
 
         self.assertEqual(User.objects.count(), 1)
         response = self.client.post(self.create_url , data, format='json')
-        print(response)
         # Additionally, we want to return the username and email upon successful creation.
         self.assertEqual(response.data['username'], data['username'])
         self.assertEqual(response.data['email'], data['email'])
