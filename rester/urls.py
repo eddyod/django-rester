@@ -37,7 +37,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path(r'api-auth', include('rest_framework.urls', namespace='rest_framework')),
     path(r'login', obtain_jwt_token),
-    path(r'token-refresh/', refresh_jwt_token),
+    path(r'api-token-refresh/', refresh_jwt_token),
     path(r'attendance', schedule_views.AttendanceListAPIView.as_view(), name='attendance-list'),
     path(r'events', schedule_views.ScheduleListAPIView.as_view(), name='event-list'),
     path(r'users/register', user_views.UserCreateView.as_view(), name='account-create'),
