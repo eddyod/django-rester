@@ -1,7 +1,7 @@
 from django.db import models
 
 class Site(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=150)
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=20, null=True, blank=True)
@@ -12,10 +12,11 @@ class Site(models.Model):
     province = models.CharField(max_length=50, null=True, blank=True)
     country = models.CharField(max_length=50, null=True, blank=True)
     created = models.DateTimeField("Created on", auto_now_add=True)
+    updated = models.DateTimeField("Updated on", auto_now_add=True)
     active = models.BooleanField(default=True)
     #owner = models.ForeignKey(User, db_column='owner_id', blank=False, null=False, on_delete=models.CASCADE)
     #    limit_choices_to={'is_staff': True},)
-    owner = models.IntegerField(db_column='owner_id', blank=False, null=False)
+    owner = models.BigIntegerField(db_column='owner_id', blank=False, null=False)
 
     class Meta:
         db_table = u'site'

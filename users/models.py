@@ -6,6 +6,7 @@ from django.dispatch import receiver
 from sites.models import Site
 
 class User(AbstractUser):
+    id = models.BigAutoField(primary_key=True)
     site = models.ForeignKey(Site, on_delete=models.SET_NULL, blank=True, null=True)
     #company = models.IntegerField(db_column='site_id', null=True)
     class Meta:
