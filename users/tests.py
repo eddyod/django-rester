@@ -9,17 +9,17 @@ from rest_framework import status
 class AccountsTest(APITestCase):
     def setUp(self):
         # We want to go ahead and originally create a user. 
-        self.test_user = User.objects.create_user(username='testuser', email='test@example.com', password='testpassword', first_name='Joe', last_name = 'Lname', is_staff=1 )
+        self.test_user = User.objects.create_user(email='foobar@example.com', password='testpassword', first_name='Joe', last_name = 'Lname')
+        self.assertEqual(User.objects.count(), 1)
         # URL for creating an account.
         self.create_url = reverse('account-create')
-        self.assertEqual(User.objects.count(), 1)
 
     def test_create_site(self):
         """
         Ensure we can create a new site which auto adds user site.
         """
         data = {
-            'name': 'Joe First',
+            'name': 'Site Test 1',
             'created': '2018-12-14',
             'active': '1',
             'owner': 1,
@@ -41,8 +41,8 @@ class AccountsTest(APITestCase):
         # We want to make sure site_id got updated in user
         user = User.objects.get(id=1)
         #####self.assertEqual(user.company, data['owner'])
-        
-        #self.assertEqual(UserSite.objects.count(), 1)
+        site = Site.objects.get(id=1)
+        self.assertEqual(user.site.id, site.id)
         # And that we're returning a 201 created code.
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -55,15 +55,14 @@ class AccountsTest(APITestCase):
             'first_name': 'Joe First',
             'last_name': 'Joe Last',
             'is_staff': '1',
-            'username': 'foobar',
-            'email': 'foobar@example.com',
+            'email': 'different@example.com',
             'password': 'somepassword'
         }
-
+        # test to make sure 1st user is in
         self.assertEqual(User.objects.count(), 1)
+        
         response = self.client.post(self.create_url , data, format='json')
         # Additionally, we want to return the username and email upon successful creation.
-        self.assertEqual(response.data['username'], data['username'])
         self.assertEqual(response.data['email'], data['email'])
         self.assertFalse('password' in response.data)
 
@@ -72,7 +71,6 @@ class AccountsTest(APITestCase):
         # And that we're returning a 201 created code.
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         # Additionally, we want to return the username and email upon successful creation.
-        self.assertEqual(response.data['username'], data['username'])
         self.assertEqual(response.data['email'], data['email'])
         self.assertFalse('password' in response.data)
 
@@ -83,7 +81,6 @@ class AccountsTest(APITestCase):
         data = {
             'first_name': 'Joe First',
             'last_name': 'Joe Last',
-                'username': 'foobar',
                 'email': 'foobarbaz@example.com',
                 'password': 'foo'
         }
@@ -97,7 +94,6 @@ class AccountsTest(APITestCase):
         data = {
             'first_name': 'Joe First',
             'last_name': 'Joe Last',
-                'username': 'foobar',
                 'email': 'foobarbaz@example.com',
                 'password': ''
         }
@@ -111,7 +107,6 @@ class AccountsTest(APITestCase):
         data = {
             'first_name': '',
             'last_name': 'Joe Last',
-                'username': 'foobar',
                 'email': 'foobarbaz@example.com',
                 'password': 'sdfsdfsfe'
         }
@@ -124,10 +119,9 @@ class AccountsTest(APITestCase):
     def test_create_user_with_NULL_first_name(self):
         data = {
             'first_name': None,
-            'last_name': 'Joe Last',
-                'username': 'foobar',
-                'email': 'foobarbaz@example.com',
-                'password': 'asdfasdfasdf354'
+            'last_name': 'Lname',
+            'email': 'foobar@example.com',
+            'password': 'asdfasdfasdf354'
         }
 
         response = self.client.post(self.create_url, data, format='json')
@@ -139,7 +133,6 @@ class AccountsTest(APITestCase):
         data = {
             'first_name': 'joe',
             'last_name': '',
-                'username': 'foobar',
                 'email': 'foobarbaz@example.com',
                 'password': 'asdfksjldkj'
         }
@@ -153,7 +146,6 @@ class AccountsTest(APITestCase):
         data = {
             'first_name': 'sdfsf',
             'last_name': None,
-                'username': 'foobar',
                 'email': 'foobarbaz@example.com',
                 'password': 'sldkjflskjdflskjd'
         }
@@ -163,55 +155,38 @@ class AccountsTest(APITestCase):
         self.assertEqual(User.objects.count(), 1)
         self.assertEqual(len(response.data['last_name']), 1)
 
-    def test_create_user_with_too_long_username(self):
+    def test_create_user_with_too_long_email(self):
         data = {
             'first_name': 'Joe First',
             'last_name': 'Joe Last',
-            'username': 'foo'*30,
-            'email': 'foobarbaz@example.com',
+            'email': 'foobarbazxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx@example.com',
             'password': 'foobar'
         }
 
         response = self.client.post(self.create_url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(User.objects.count(), 1)
-        self.assertEqual(len(response.data['username']), 1)
+        #self.assertEqual(len(response.data['email']), 1)
 
-    def test_create_user_with_no_username(self):
+    def test_create_user_with_no_email(self):
         data = {
             'first_name': 'Joe First',
             'last_name': 'Joe Last',
-                'username': '',
-                'email': 'foobarbaz@example.com',
+                'email': '',
                 'password': 'foobar'
                 }
 
         response = self.client.post(self.create_url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(User.objects.count(), 1)
-        self.assertEqual(len(response.data['username']), 1)
-
-    def test_create_user_with_preexisting_username(self):
-        data = {
-            'first_name': 'Joe First',
-            'last_name': 'Joe Last',
-                'username': 'testuser',
-                'email': 'user@example.com',
-                'password': 'testuser'
-                }
-
-        response = self.client.post(self.create_url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(User.objects.count(), 1)
-        self.assertEqual(len(response.data['username']), 1)
+        self.assertEqual(len(response.data['email']), 1)
 
 
     def test_create_user_with_preexisting_email(self):
         data = {
             'first_name': 'Joe First',
             'last_name': 'Joe Last',
-            'username': 'testuser2',
-            'email': 'test@example.com',
+            'email': 'foobar@example.com',
             'password': 'testuser'
         }
 
@@ -224,7 +199,6 @@ class AccountsTest(APITestCase):
         data = {
             'first_name': 'Joe First',
             'last_name': 'Joe Last',
-            'username': 'foobarbaz',
             'email':  'testing',
             'passsword': 'foobarbaz'
         }
@@ -239,7 +213,6 @@ class AccountsTest(APITestCase):
         data = {
             'first_name': 'Joe First',
             'last_name': 'Joe Last',
-                'username' : 'foobar',
                 'email': '',
                 'password': 'foobarbaz'
         }
