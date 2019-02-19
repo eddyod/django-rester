@@ -39,7 +39,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 @receiver(post_save, sender=Site)
 def update_user(sender, instance, created, **kwargs):
     if created:
-        #user = User.objects.get(id=instance.owner)
-        #User.objects.update(site=instance)
         User.objects.filter(id=instance.owner).update(site=instance)
 

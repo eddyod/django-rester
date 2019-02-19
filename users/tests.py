@@ -62,6 +62,7 @@ class AccountsTest(APITestCase):
         self.assertEqual(User.objects.count(), 1)
         
         response = self.client.post(self.create_url , data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         # Additionally, we want to return the username and email upon successful creation.
         self.assertEqual(response.data['email'], data['email'])
         self.assertFalse('password' in response.data)
@@ -69,7 +70,6 @@ class AccountsTest(APITestCase):
         # We want to make sure we have two users in the database..
         self.assertEqual(User.objects.count(), 2)
         # And that we're returning a 201 created code.
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         # Additionally, we want to return the username and email upon successful creation.
         self.assertEqual(response.data['email'], data['email'])
         self.assertFalse('password' in response.data)
