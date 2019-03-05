@@ -19,7 +19,7 @@ class Employee(models.Model):
     updated = models.DateTimeField("Updated on", auto_now_add=True)
     active = models.BooleanField(default=True)
 
-    user = models.OneToOneField(User,db_column='user_id', on_delete=models.CASCADE, null=True, blank=True)
+    user = models.OneToOneField(User, db_column='user_id', on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         db_table = u'employee'

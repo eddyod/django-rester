@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Site(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=150)
@@ -14,7 +15,7 @@ class Site(models.Model):
     created = models.DateTimeField("Created on", auto_now_add=True)
     updated = models.DateTimeField("Updated on", auto_now_add=True)
     active = models.BooleanField(default=True)
-    #owner = models.ForeignKey(User, db_column='owner_id', blank=False, null=False, on_delete=models.CASCADE)
+    #  owner = models.ForeignKey(User, db_column='owner_id', blank=False, null=False, on_delete=models.CASCADE,
     #    limit_choices_to={'is_staff': True},)
     owner = models.BigIntegerField(db_column='owner_id', blank=False, null=False)
 
