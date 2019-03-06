@@ -1,13 +1,15 @@
 from rest_framework import viewsets
 from rest_framework.filters import SearchFilter, OrderingFilter
-#from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 
+from rest_framework_jwt.views import ObtainJSONWebToken
+
 from .models import User
 from .serializers import UserSerializer
 from sites.serializers import SiteSerializer
+from .JWTSerializer import JWTSerializer
 
 # for JWT
 class UserViewSet(viewsets.ModelViewSet):
@@ -41,7 +43,7 @@ class UserCreateView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
+
 # for anonymous site creation
 # url=api/sites
 class SiteCreateView(APIView):
@@ -56,3 +58,8 @@ class SiteCreateView(APIView):
                 return Response(json, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# Create your views here.
+class ObtainJWTView(ObtainJSONWebToken):
+    serializer_class = JWTSerializer

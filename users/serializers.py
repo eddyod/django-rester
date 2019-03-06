@@ -1,7 +1,7 @@
 from rest_framework import serializers
-#from django.contrib.auth.models import User
 from .models import User
 from rest_framework.validators import UniqueValidator
+
 from sites.serializers import SiteSerializer
 
 
@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True,validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(min_length=6, write_only=True)
     site = SiteSerializer(many=False, read_only=True)
-    
+
     def create(self, validated_data):
         user = User(email=validated_data['email'],
         first_name = validated_data['first_name'],
