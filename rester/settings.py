@@ -18,7 +18,7 @@ CORS_ORIGIN_ALLOW_ALL=True
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@5912nif63v56j-!^yh_+*unb&6-bn+%vm)q)bw!b^lly6-1h6'
+SECRET_KEY = 'put secret key here'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = ['*']
@@ -85,12 +85,10 @@ WSGI_APPLICATION = 'rester.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'scheduler',                      # Or path to database file if using sqlite3.
-        'USER': 'rester',                      # Not used with sqlite3.
-        'PASSWORD': '0724.bir',                  # Not used with sqlite3.
-        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
-#        'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
-#        'OPTIONS': {'sql_mode': 'traditional'},
+        'NAME': 'put name of DB here',                      # Or path to database file if using sqlite3.
+        'USER': 'put user name here',                      # Not used with sqlite3.
+        'PASSWORD': 'put password here',                  # Not used with sqlite3.
+        'HOST': 'put host here',                      # Set to empty string for localhost. Not used with sqlite3.
     }
 }
 
@@ -119,8 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Los_Angeles'
-#TIME_ZONE = 'UTC'
+TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = False
